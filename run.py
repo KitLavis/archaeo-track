@@ -12,6 +12,20 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 
+def create_excavation_area():
+    """
+    Creates new worksheet for the excavation area based on
+    data inputted by the user
+    """
+    standard_headings = ["ceramic", "flint", "bone", "metal", "other"]
+    new_ex_area_name = input("Name of excavation area: ")
+    print(f"\nCreating {new_ex_area_name}...\n")
+    new_ex_area = SHEET.add_worksheet(title = f"{new_ex_area_name}", rows=100, cols=20)
+    new_ex_area.append_row(standard_headings)
+    new_ex_area.format('1', {'textFormat': {'bold': True}})
+    print(f"{new_ex_area_name} successfully created\n")
+
+
 def get_finds_data():
     """
     Get finds data from the user.
@@ -22,7 +36,6 @@ def get_finds_data():
         print("Enter number of each material type from the day's excavation.")
         print("Data should be 5 numbers seperated by commas in this order:")
         print("ceramic,flint,bone,metal,other.")
-        print("e.g. 13,5,0,6,8")
 
         data_str = input("Enter finds numbers here:\n")
 
@@ -66,6 +79,7 @@ def main():
     """
     Run all Program functions
     """
+    create_excavation_area()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, "trench_01")
