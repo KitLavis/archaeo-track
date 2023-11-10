@@ -16,16 +16,21 @@ def get_finds_data():
     """
     Get finds data from the user.
     """
-    print("Enter number of each material type from the day's excavation.")
-    print("Data should be 5 numbers seperated by commas in this order:")
-    print("ceramic,flint,bone,metal,other.")
-    print("e.g. 13,5,0,6,8")
+    while True:
+        print("Enter number of each material type from the day's excavation.")
+        print("Data should be 5 numbers seperated by commas in this order:")
+        print("ceramic,flint,bone,metal,other.")
+        print("e.g. 13,5,0,6,8")
 
-    data_str = input("Enter finds numbers here:\n")
+        data_str = input("Enter finds numbers here:\n")
 
-    finds_data = data_str.split(",")
+        finds_data = data_str.split(",")
 
-    print(finds_data)
+        if validate_data(finds_data):
+            print("Finds data is valid!")
+            break
+
+    return (finds_data)
 
 def validate_data(values):
     """
