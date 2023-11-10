@@ -53,11 +53,22 @@ def validate_data(values):
         
     return True
 
+def update_worksheet(data, worksheet):
+    """
+    Recieves the new data to be inserted in the relevant worksheet
+    """
+    print(f"Updating {worksheet} finds...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} finds updated")
+
 def main():
     """
     Run all Program functions
     """
     data = get_finds_data()
+    finds_data = [int(num) for num in data]
+    update_worksheet(finds_data, "trench_01")
 
 print("Welcome to the ArchaeoTrack finds manager")
 main()
