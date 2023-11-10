@@ -12,6 +12,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 
+def choose_excavation_area():
+    current_excavation_areas = SHEET.worksheets()
+    print(f"Current excavation areas: {current_excavation_areas}")
+
 def create_excavation_area():
     """
     Creates new worksheet for the excavation area based on
@@ -79,6 +83,7 @@ def main():
     """
     Run all Program functions
     """
+    choose_excavation_area()
     create_excavation_area()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
