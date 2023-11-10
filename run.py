@@ -15,6 +15,8 @@ SHEET = GSPREAD_CLIENT.open('archaeo_track')
 def get_finds_data():
     """
     Get finds data from the user.
+    While loop repeatedly requests data from the user until
+    they input a valid string of 6 numbers seperated by commas
     """
     while True:
         print("Enter number of each material type from the day's excavation.")
@@ -44,11 +46,12 @@ def validate_data(values):
             raise ValueError(
                 f"Exactly 5 values required, you've provided {len(values)}"
             )
-        except ValueErrpr as e:
-            print(f"Invalud data: {e}, please input again.\n")
-            return False
+
+    except ValueError as e:
+        print(f"Invalid data: {e}, please input again.\n")
+        return False
         
-        return True
+    return True
 
 def main():
     """
