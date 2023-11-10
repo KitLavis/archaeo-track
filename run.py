@@ -26,3 +26,9 @@ def get_finds_data():
     finds_data = data_str.split(",")
 
     return finds_data
+
+def main():
+    """
+    Run all Program functions
+    """
+    data = get_finds_data()
