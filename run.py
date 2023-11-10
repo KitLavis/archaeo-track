@@ -25,10 +25,31 @@ def get_finds_data():
 
     finds_data = data_str.split(",")
 
-    return finds_data
+    print(finds_data)
+
+def validate_data(values):
+    """
+    Converts string values to integers so they can be used.
+    If not possible, or if there isn't exactly 5 values,
+    ValueError is raised
+    """
+    try:
+        [int(value) for value in values]
+        if len(values) != 5:
+            raise ValueError(
+                f"Exactly 5 values required, you've provided {len(values)}"
+            )
+        except ValueErrpr as e:
+            print(f"Invalud data: {e}, please input again.\n")
+            return False
+        
+        return True
 
 def main():
     """
     Run all Program functions
     """
     data = get_finds_data()
+
+print("Welcome to the ArchaeoTrack finds manager")
+main()
