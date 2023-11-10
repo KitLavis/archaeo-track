@@ -12,7 +12,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 
-trench01 = SHEET.worksheet('trench_01')
+def get_finds_data():
+    """
+    Get finds data from the user.
+    """
+    print("Enter number of each material type from the day's excavation.")
+    print("Data should be 5 numbers seperated by commas in this order:")
+    print("ceramic,flint,bone,metal,other.")
+    print("e.g. 13,5,0,6,8")
 
-data = trench01.get_all_values()
-print(data)
+    data_str = input("Enter finds numbers here:\n")
+
+    finds_data = data_str.split(",")
+
+    return finds_data
