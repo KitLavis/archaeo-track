@@ -14,7 +14,18 @@ SHEET = GSPREAD_CLIENT.open('archaeo_track')
 
 def choose_excavation_area():
     current_excavation_areas = SHEET.worksheets()
-    print(f"Current excavation areas: {current_excavation_areas}")
+    print("Current excavation areas:")
+
+    for ex_area in current_excavation_areas:
+        print(ex_area)
+    
+    area_name = input("Does a log for the area already exist (y/n): ")
+
+    if area_name == "n":
+        create_excavation_area()
+    elif area_name == "y":
+        print("choose ex area")
+        
 
 def create_excavation_area():
     """
@@ -84,7 +95,7 @@ def main():
     Run all Program functions
     """
     choose_excavation_area()
-    create_excavation_area()
+    # create_excavation_area()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, "trench_01")
