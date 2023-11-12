@@ -38,14 +38,19 @@ def check_log():
     return True
 
 def choose_existing_area():
-
-    current_excavation_areas = SHEET.worksheets()
+    """
+    List of worksheets is converted into a string
+    In the while loop the string is checked to see if it inclues the area
+    inputted by the user. If so get_finds_data is triggered.
+    If not then returns true and loop starts at again.
+    """
+    current_excavation_areas = str(SHEET.worksheets())
     
     while True:
 
         chosen_area = input("Name of excavation area: ")
 
-        if chosen_area == SHEET.worksheet(title):
+        if chosen_area in current_excavation_areas:
             get_finds_data()
             break
         else:
