@@ -19,12 +19,19 @@ def choose_excavation_area():
     for ex_area in current_excavation_areas:
         print(ex_area)
     
-    area_name = input("Does a log for the area already exist (y/n): ")
+    while True:
 
-    if area_name == "n":
-        create_excavation_area()
-    elif area_name == "y":
-        print("choose ex area")
+        area_name = input("Does a log for the area already exist (y/n): ")
+
+        if area_name == "y":
+            print("Choose ex area")
+            break
+        elif area_name == "n":
+            create_excavation_area()
+            break
+        else:
+            print("Answer invalid. Please enter either 'y' or 'n'")
+    return True
         
 
 def create_excavation_area():
