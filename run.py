@@ -12,27 +12,45 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 
-def choose_excavation_area():
+def check_log():
+    """
+    While loop asks if the excavation area already exists.
+    If yes then choose_area is triggered. If no then create_excavation_area is triggered.
+    If the answer is invalid then it returns true and starts again.
+    """
     current_excavation_areas = SHEET.worksheets()
-    print("Current excavation areas:")
+    print(f"Current excavation areas:\n")
 
     for ex_area in current_excavation_areas:
         print(ex_area)
     
     while True:
-
-        area_name = input("Does a log for the area already exist (y/n): ")
+        area_name = input(f"\nDoes a log for the area already exist? (y/n): ")
 
         if area_name == "y":
-            print("Choose ex area")
+            choose_existing_area()
             break
         elif area_name == "n":
             create_excavation_area()
             break
         else:
-            print("Answer invalid. Please enter either 'y' or 'n'")
+            print(f"\nAnswer invalid. Please enter either 'y' or 'n'")
     return True
-        
+
+def choose_existing_area():
+
+    current_excavation_areas = SHEET.worksheets()
+    
+    while True:
+
+        chosen_area = input("Name of excavation area: ")
+
+        if chosen_area == SHEET.worksheet(title):
+            get_finds_data()
+            break
+        else:
+            print(f"{chosen_area} doesn't exist. Please choose an existing area.")
+    return True
 
 def create_excavation_area():
     """
@@ -40,12 +58,12 @@ def create_excavation_area():
     data inputted by the user
     """
     standard_headings = ["ceramic", "flint", "bone", "metal", "other"]
-    new_ex_area_name = input("Name of excavation area: ")
-    print(f"\nCreating {new_ex_area_name}...\n")
-    new_ex_area = SHEET.add_worksheet(title = f"{new_ex_area_name}", rows=100, cols=20)
-    new_ex_area.append_row(standard_headings)
-    new_ex_area.format('1', {'textFormat': {'bold': True}})
-    print(f"{new_ex_area_name} successfully created\n")
+    new_area_name = input("Name of new excavation area: ")
+    print(f"\nCreating {new_area_name}...\n")
+    new_area = SHEET.add_worksheet(title = f"{new_area_name}", rows=100, cols=20)
+    new_area.append_row(standard_headings)
+    new_area.format('1', {'textFormat': {'bold': True}})
+    print(f"{new_area_name} successfully created\n")
 
 
 def get_finds_data():
@@ -101,11 +119,10 @@ def main():
     """
     Run all Program functions
     """
-    choose_excavation_area()
-    # create_excavation_area()
+    check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, "trench_01")
 
-print("Welcome to the ArchaeoTrack finds manager")
+print(f"Welcome to the ArchaeoTrack finds manager\n")
 main()
