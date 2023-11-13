@@ -122,6 +122,28 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet_to_update} finds updated")
 
+def update_another_area():
+    """
+    While loop asks whether or not the user would like to update another area.
+    if 'y' then main() runs again and the program restarts.
+    If no then a goodbye message is printer and the program exists.
+    Loops until a correct answer is given
+    """
+    while True:
+
+        update_again = input("Update another area? (y/n): ")
+
+        if update_again == "y" or "Y":
+            main()
+            break
+        elif update_again == "n" or "N":
+            print("Thank you for choosing the ArchaeoTrack finds manager!")
+            print("Happy digging!")
+            break
+        else:
+            print("Invalid answer. Please answer either 'y' or 'n'.")
+        return True
+
 def main():
     """
     Run all Program functions
@@ -130,6 +152,7 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
+    update_another_sheet()
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
 main()
