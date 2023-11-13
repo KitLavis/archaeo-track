@@ -29,10 +29,10 @@ def check_log():
 
         if area_name == "y":
             choose_existing_area()
-            break
+            return "y"
         elif area_name == "n":
             create_excavation_area()
-            break
+            return "n"
         else:
             print(f"\nAnswer invalid. Please enter either 'y' or 'n'")
     return True
@@ -45,13 +45,15 @@ def choose_existing_area():
     If not then returns true and loop starts at again.
     """
     current_excavation_areas = str(SHEET.worksheets())
+    global worksheet_to_update
     
     while True:
 
         chosen_area = input("Name of excavation area: ")
 
         if chosen_area in current_excavation_areas:
-            get_finds_data()
+            print(f"{chosen_area} chosen")
+            worksheet_to_update = SHEET.worksheet(f"{chosen_area}")
             break
         else:
             print(f"{chosen_area} doesn't exist. Please choose an existing area.")
@@ -69,13 +71,14 @@ def create_excavation_area():
     new_area.append_row(standard_headings)
     new_area.format('1', {'textFormat': {'bold': True}})
     print(f"{new_area_name} successfully created\n")
-
+    global worksheet_to_update
+    worksheet_to_update = SHEET.worksheet(f"{new_area_name}")
 
 def get_finds_data():
     """
     Get finds data from the user.
     While loop repeatedly requests data from the user until
-    they input a valid string of 6 numbers seperated by commas
+    they input a valid string of 5 numbers seperated by commas
     """
     while True:
         print("Enter number of each material type from the day's excavation.")
@@ -115,10 +118,9 @@ def update_worksheet(data, worksheet):
     """
     Recieves the new data to be inserted in the relevant worksheet
     """
-    print(f"Updating {worksheet} finds...\n")
-    worksheet_to_update = SHEET.worksheet(worksheet)
+    print(f"Updating {worksheet_to_update} finds...\n")
     worksheet_to_update.append_row(data)
-    print(f"{worksheet} finds updated")
+    print(f"{worksheet_to_update} finds updated")
 
 def main():
     """
@@ -127,7 +129,7 @@ def main():
     check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
-    update_worksheet(finds_data, "trench_01")
+    update_worksheet(finds_data, worksheet_to_update)
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
 main()
