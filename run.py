@@ -152,7 +152,7 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
-    update_another_sheet()
+    update_another_area()
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
 main()
