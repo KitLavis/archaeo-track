@@ -133,16 +133,16 @@ def update_another_area():
 
         update_again = input("Update another area? (y/n): ")
 
-        if update_again == "y" or "Y":
+        if update_again == "y":
             main()
             break
-        elif update_again == "n" or "N":
-            print("Thank you for choosing the ArchaeoTrack finds manager!")
+        elif update_again == "n":
+            print("Thank you for choosing the ArchaeoTrack finds manager.")
             print("Happy digging!")
             break
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
-        return True
+    return True
 
 def main():
     """
