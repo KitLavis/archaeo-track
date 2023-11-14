@@ -143,6 +143,11 @@ def update_another_area():
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
     return True
+ 
+def calculate_totals():
+    whole_site = SHEET.worksheet("whole_site").get_all_values()
+    current_total = whole_site[-1]
+    print(current_total)
 
 def main():
     """
@@ -152,6 +157,7 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
+    calculate_totals()
     update_another_area()
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
