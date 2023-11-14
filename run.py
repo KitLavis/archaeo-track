@@ -120,9 +120,12 @@ def update_worksheet(data, worksheet):
     """
     Recieves the new data to be inserted in the relevant worksheet
     """
-    print(f"Updating {worksheet} finds...\n")
-    worksheet.append_row(data)
-    print(f"{worksheet} finds updated")
+    worksheet_str = str(worksheet).split("'")
+    worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
+    for area_name in worksheet_name:
+        print(f"Updating {area_name} finds...\n")
+        worksheet.append_row(data)
+        print(f"{area_name} finds updated")
 
 def update_another_area():
     """
