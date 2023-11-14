@@ -45,14 +45,15 @@ def choose_existing_area():
     inputted by the user. If so get_finds_data is triggered.
     If not then returns true and loop starts at again.
     """
-    current_excavation_areas = str(SHEET.worksheets())
+    current_excavation_areas = str(SHEET.worksheets()).split("'")
+    area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
     global worksheet_to_update
     
     while True:
 
         chosen_area = input("Name of excavation area: ")
 
-        if chosen_area in current_excavation_areas:
+        if chosen_area in area_titles:
             print(f"{chosen_area} chosen")
             worksheet_to_update = SHEET.worksheet(f"{chosen_area}")
             break
