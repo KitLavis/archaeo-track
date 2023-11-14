@@ -118,9 +118,9 @@ def update_worksheet(data, worksheet):
     """
     Recieves the new data to be inserted in the relevant worksheet
     """
-    print(f"Updating {worksheet_to_update} finds...\n")
-    worksheet_to_update.append_row(data)
-    print(f"{worksheet_to_update} finds updated")
+    print(f"Updating {worksheet} finds...\n")
+    worksheet.append_row(data)
+    print(f"{worksheet} finds updated")
 
 def update_another_area():
     """
@@ -144,10 +144,17 @@ def update_another_area():
             print("Invalid answer. Please answer either 'y' or 'n'.")
     return True
  
-def calculate_totals():
+def calculate_totals(finds_data):
     whole_site = SHEET.worksheet("whole_site").get_all_values()
     current_total = whole_site[-1]
-    print(current_total)
+
+    new_totals = []
+
+    for total, finds in zip(current_total, finds_data):
+        totals = int(total) + finds
+        new_totals.append(totals)
+    
+    return new_totals
 
 def main():
     """
@@ -157,7 +164,7 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
-    calculate_totals()
+    calculate_totals(finds_data)
     update_another_area()
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
