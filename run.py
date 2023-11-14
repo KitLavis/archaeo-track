@@ -15,14 +15,15 @@ SHEET = GSPREAD_CLIENT.open('archaeo_track')
 def check_log():
     """
     While loop asks if the excavation area already exists.
-    If yes then choose_area is triggered. If no then create_excavation_area is triggered.
-    If the answer is invalid then it returns true and starts again.
+    If yes then choose_area is triggered. If no then create_excavation_area
+    is triggered. If the answer is invalid then it returns true and starts again.
     """
-    current_excavation_areas = SHEET.worksheets()
+    current_excavation_areas = str(SHEET.worksheets()).split("'")
+    area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
     print(f"Current excavation areas:\n")
 
-    for ex_area in current_excavation_areas:
-        print(ex_area)
+    for area_title in area_titles:
+        print(area_title)
     
     while True:
         area_name = input(f"\nDoes a log for the area already exist? (y/n): ")
