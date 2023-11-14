@@ -20,7 +20,7 @@ def check_log():
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
-    print(f"Current excavation areas:\n")
+    print(f"\nCurrent excavation areas:\n")
 
     for area_title in area_titles:
         print(area_title)
@@ -40,10 +40,11 @@ def check_log():
 
 def choose_existing_area():
     """
-    List of worksheets is converted into a string
-    In the while loop the string is checked to see if it inclues the area
+    List of worksheets is converted into a string and list comprehension is used
+    to remove the unnecessary data, leaving purely the area titles.
+    In the while loop the list is checked to see if it includes the area
     inputted by the user. If so get_finds_data is triggered.
-    If not then returns true and loop starts at again.
+    If not then returns true and loop starts again.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
@@ -54,7 +55,7 @@ def choose_existing_area():
         chosen_area = input("Name of excavation area: ")
 
         if chosen_area in area_titles:
-            print(f"{chosen_area} chosen")
+            print(f"\n{chosen_area} chosen\n")
             worksheet_to_update = SHEET.worksheet(f"{chosen_area}")
             break
         else:
@@ -85,14 +86,14 @@ def get_finds_data():
     while True:
         print("Enter number of each material type from the day's excavation.")
         print("Data should be 5 numbers seperated by commas in this order:")
-        print("ceramic,flint,bone,metal,other.")
+        print(f"ceramic,flint,bone,metal,other.\n")
 
-        data_str = input("Enter finds numbers here:\n")
+        data_str = input("Enter finds numbers here: ")
 
         finds_data = data_str.split(",")
 
         if validate_data(finds_data):
-            print("Finds data is valid!")
+            print(f"\nFinds data is valid!\n")
             break
 
     return (finds_data)
@@ -119,13 +120,15 @@ def validate_data(values):
 def update_worksheet(data, worksheet):
     """
     Recieves the new data to be inserted in the relevant worksheet
+    List comprehension removes unneccessary info and leaves the area title.
+    For loop gets area title from the list and prints.
     """
     worksheet_str = str(worksheet).split("'")
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
     for area_name in worksheet_name:
         print(f"Updating {area_name} finds...\n")
         worksheet.append_row(data)
-        print(f"{area_name} finds updated")
+        print(f"{area_name} finds updated!\n")
 
 def update_another_area():
     """
@@ -179,5 +182,5 @@ def main():
     update_worksheet(new_totals, whole_site)
     update_another_area()
 
-print(f"Welcome to the ArchaeoTrack finds manager\n")
+print("Welcome to the ArchaeoTrack finds manager")
 main()
