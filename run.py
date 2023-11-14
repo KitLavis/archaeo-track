@@ -145,6 +145,11 @@ def update_another_area():
     return True
  
 def calculate_totals(finds_data):
+    """
+    Calculates the total number of finds across the site by adding the
+    new finds_data inputted to the current values in the final row
+    of the whole_site worksheet.
+    """
     whole_site = SHEET.worksheet("whole_site").get_all_values()
     current_total = whole_site[-1]
 
@@ -164,7 +169,9 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
-    calculate_totals(finds_data)
+    new_totals = calculate_totals(finds_data)
+    whole_site = SHEET.worksheet("whole_site")
+    update_worksheet(new_totals, whole_site)
     update_another_area()
 
 print(f"Welcome to the ArchaeoTrack finds manager\n")
