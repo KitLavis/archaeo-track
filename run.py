@@ -153,7 +153,8 @@ def update_another_area():
             break
         elif update_again == "n":
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(DAILY_REPORT)
+            print("This session:\n")
+            print(f"{DAILY_REPORT}\n")
             print("Thank you for choosing the ArchaeoTrack finds manager.")
             print("Happy digging!")
             break
@@ -178,6 +179,14 @@ def calculate_totals(finds_data):
     
     return new_totals
 
+def update_session_report(data):
+    """
+    Pushes the updated excavation area and its finds values to the report list
+    """
+    full_sheet_str = str(worksheet_to_update).split("'")
+    area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
+    DAILY_REPORT[f"{area_title}"] = str(f"{data}")
+
 def main():
     """
     Run all Program functions
@@ -186,12 +195,16 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
-    full_sheet_str = str(worksheet_to_update).split("'")
-    area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
-    DAILY_REPORT[f"{area_title}"] = str(f"{finds_data}")
+
+    # full_sheet_str = str(worksheet_to_update).split("'")
+    # area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
+    # DAILY_REPORT[f"{area_title}"] = str(f"{finds_data}")
+    update_session_report(finds_data)
+
     new_totals = calculate_totals(finds_data)
     whole_site = SHEET.worksheet("whole_site")
     update_worksheet(new_totals, whole_site)
+
     update_another_area()
 
 print("Welcome to the ArchaeoTrack finds manager")
