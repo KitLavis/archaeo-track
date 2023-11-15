@@ -145,6 +145,7 @@ def update_worksheet(data, worksheet):
         worksheet.append_row(data)
         print(f"{area_name} finds updated!\n")
 
+
 def update_another_area():
     """
     While loop asks whether or not the user would like to update another area.
@@ -162,6 +163,7 @@ def update_another_area():
             break
         elif update_again == "n":
             os.system('cls' if os.name == 'nt' else 'clear')
+            update_whole_site()
             print("This session:\n")
             print(f"{SESSION_REPORT}\n")
             print("Thank you for choosing the ArchaeoTrack finds manager.")
@@ -199,6 +201,11 @@ def update_session_report(data):
     for x in new_total:
         SESSION_REPORT.append(x)
 
+def update_whole_site():
+    totals = calculate_totals()
+    today_totals = [str(date.today())] + totals
+    whole_site = SHEET.worksheet("whole_site")
+    update_worksheet(today_totals, whole_site)
 
 def main():
     """
@@ -219,11 +226,5 @@ def main():
     update_session_report(finds_data)
 
     update_another_area()
-
-    totals = calculate_totals()
-    todays_totals = [today] + totals
-    whole_site = SHEET.worksheet("whole_site")
-    update_worksheet(todays_totals, whole_site)
-
 
 main()
