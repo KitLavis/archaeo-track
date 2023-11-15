@@ -1,6 +1,7 @@
 import gspread
 import os
 import pyfiglet
+from datetime import date
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -13,7 +14,8 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
-SESSION_REPORT = {}
+RUNNING_TOTAL = [0, 0, 0, 0, 0]
+SESSION_REPORT = [0, 0, 0, 0, 0]
 UPDATE_HISTORY = []
 
 def print_header(header):
@@ -79,7 +81,7 @@ def create_excavation_area():
     Creates new worksheet for the excavation area based on
     data inputted by the user
     """
-    standard_headings = ["ceramic", "flint", "bone", "metal", "other"]
+    standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
     new_area_name = input("Name of new excavation area: ")
     print(f"\nCreating {new_area_name}...\n")
     new_area = SHEET.add_worksheet(title = f"{new_area_name}", rows=100, cols=20)
@@ -169,7 +171,7 @@ def update_another_area():
             print("Invalid answer. Please answer either 'y' or 'n'.")
     return True
  
-def calculate_totals(finds_data):
+def calculate_totals():
     """
     Calculates the total number of finds across the site by adding the
     new finds_data inputted to the current values in the final row
@@ -177,22 +179,26 @@ def calculate_totals(finds_data):
     """
     whole_site = SHEET.worksheet("whole_site").get_all_values()
     current_total = whole_site[-1]
+    current_total.pop(0)
 
     new_totals = []
 
-    for total, finds in zip(current_total, finds_data):
-        totals = int(total) + finds
+    for total, todays_data in zip(current_total, SESSION_REPORT):
+        totals = int(total) + todays_data
         new_totals.append(totals)
     
     return new_totals
 
-def update_session_report(data, worksheet):
+def update_session_report(data):
     """
     Pushes the updated excavation area and its finds values to the report list
     """
-    full_sheet_str = str(worksheet).split("'")
-    area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
-    SESSION_REPORT[f"{area_title}"] = str(f"{data}")
+    new_total = [x + y for x, y in zip(SESSION_REPORT, data)]
+    SESSION_REPORT.clear()
+
+    for x in new_total:
+        SESSION_REPORT.append(x)
+
 
 def main():
     """
@@ -200,21 +206,24 @@ def main():
     """
     print_header("ArchaeoTrack")
     print("The archaeological finds tracker!")
+    today = str(date.today())
     check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
+    date_finds_data = [today] + finds_data
     
     grab_sheet_for_updating = UPDATE_HISTORY[-1]
     worksheet_to_update = SHEET.worksheet(f"{grab_sheet_for_updating}")
-
-    update_worksheet(finds_data, worksheet_to_update)
-    update_session_report(finds_data, worksheet_to_update)
-
-    new_totals = calculate_totals(finds_data)
-    whole_site = SHEET.worksheet("whole_site")
-    update_worksheet(new_totals, whole_site)
+    
+    update_worksheet(date_finds_data, worksheet_to_update)
+    update_session_report(finds_data)
 
     update_another_area()
+
+    totals = calculate_totals()
+    todays_totals = [today] + totals
+    whole_site = SHEET.worksheet("whole_site")
+    update_worksheet(todays_totals, whole_site)
 
 
 main()
