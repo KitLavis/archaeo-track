@@ -186,7 +186,9 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
-    DAILY_REPORT[f"{worksheet_to_update}"] = f"{finds_data}"
+    full_sheet_str = str(worksheet_to_update).split("'")
+    area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
+    DAILY_REPORT[f"{area_title}"] = str(f"{finds_data}")
     new_totals = calculate_totals(finds_data)
     whole_site = SHEET.worksheet("whole_site")
     update_worksheet(new_totals, whole_site)
