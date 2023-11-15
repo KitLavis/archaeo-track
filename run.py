@@ -14,7 +14,6 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
-RUNNING_TOTAL = [0, 0, 0, 0, 0]
 SESSION_REPORT = [0, 0, 0, 0, 0]
 UPDATE_HISTORY = []
 
@@ -69,7 +68,6 @@ def choose_existing_area():
             print(f"\n{chosen_area} chosen\n")
             os.system('cls' if os.name == 'nt' else 'clear')
             print_header(f"{chosen_area}")
-            # print(f"{chosen_area}\n")
             UPDATE_HISTORY.append(chosen_area)
             return(chosen_area)
         else:
@@ -150,7 +148,8 @@ def update_another_area():
     """
     While loop asks whether or not the user would like to update another area.
     if 'y' then main() runs again and the program restarts.
-    If no then a goodbye message is printer and the program exists.
+    If no then a whole site updates and goodbye message is printed.
+    Program then exists.
     Loops until a correct answer is given
     """
     while True:
@@ -162,11 +161,12 @@ def update_another_area():
             main()
             break
         elif update_again == "n":
-            os.system('cls' if os.name == 'nt' else 'clear')
             update_whole_site()
-            print("This session:\n")
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print_header("Thank You")
+            print("for choosing the ArchaeoTrack finds manager.\n")
+            print("Total finds this session:\n")
             print(f"{SESSION_REPORT}\n")
-            print("Thank you for choosing the ArchaeoTrack finds manager.")
             print("Happy digging!")
             break
         else:
@@ -175,9 +175,8 @@ def update_another_area():
  
 def calculate_totals():
     """
-    Calculates the total number of finds across the site by adding the
-    new finds_data inputted to the current values in the final row
-    of the whole_site worksheet.
+    Calculates the total number of each find type for the session
+    and adds them to the existing totals from the whole_site worksheet.
     """
     whole_site = SHEET.worksheet("whole_site").get_all_values()
     current_total = whole_site[-1]
@@ -193,7 +192,8 @@ def calculate_totals():
 
 def update_session_report(data):
     """
-    Pushes the updated excavation area and its finds values to the report list
+    Adds new finds data to existing session total and then appends to
+    SESSION_REPORT list
     """
     new_total = [x + y for x, y in zip(SESSION_REPORT, data)]
     SESSION_REPORT.clear()
@@ -202,10 +202,14 @@ def update_session_report(data):
         SESSION_REPORT.append(x)
 
 def update_whole_site():
+    """
+    Triggers calculate_totals function. The new totals are then added
+    to the whole_site worksheet.
+    """
     totals = calculate_totals()
-    today_totals = [str(date.today())] + totals
+    date_totals = [str(date.today())] + totals
     whole_site = SHEET.worksheet("whole_site")
-    update_worksheet(today_totals, whole_site)
+    update_worksheet(date_totals, whole_site)
 
 def main():
     """
