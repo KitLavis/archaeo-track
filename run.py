@@ -16,6 +16,11 @@ SHEET = GSPREAD_CLIENT.open('archaeo_track')
 SESSION_REPORT = {}
 UPDATE_HISTORY = []
 
+def print_header(header):
+    T = header
+    ASCII_art_1 = pyfiglet.figlet_format(T)
+    print(ASCII_art_1)
+
 def check_log():
     """
     While loop asks if the excavation area already exists.
@@ -61,7 +66,8 @@ def choose_existing_area():
         if chosen_area in area_titles:
             print(f"\n{chosen_area} chosen\n")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"{chosen_area}\n")
+            print_header(f"{chosen_area}")
+            # print(f"{chosen_area}\n")
             UPDATE_HISTORY.append(chosen_area)
             return(chosen_area)
         else:
@@ -81,7 +87,7 @@ def create_excavation_area():
     new_area.format('1', {'textFormat': {'bold': True}})
     print(f"{new_area_name} successfully created\n")
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"{new_area_name}")
+    print_header(f"{new_area_name}")
     UPDATE_HISTORY.append(new_area_name)
 
 def get_finds_data():
@@ -192,9 +198,7 @@ def main():
     """
     Run all Program functions
     """
-    T = "ArchaeoTrack"
-    ASCII_art_1 = pyfiglet.figlet_format(T)
-    print(ASCII_art_1)
+    print_header("ArchaeoTrack")
     print("The archaeological finds tracker!")
     check_log()
     data = get_finds_data()
