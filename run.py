@@ -1,5 +1,6 @@
 import gspread
 import os
+import pyfiglet
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -190,6 +191,10 @@ def main():
     """
     Run all Program functions
     """
+    T = "ArchaeoTrack"
+    ASCII_art_1 = pyfiglet.figlet_format(T)
+    print(ASCII_art_1)
+    print("The archaeological finds tracker!")
     check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
@@ -206,5 +211,5 @@ def main():
 
     update_another_area()
 
-print("Welcome to the ArchaeoTrack finds manager")
+
 main()
