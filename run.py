@@ -12,7 +12,8 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
-DAILY_REPORT = {}
+SESSION_REPORT = {}
+UPDATE_HISTORY = []
 
 def check_log():
     """
@@ -32,10 +33,10 @@ def check_log():
 
         if area_name == "y":
             choose_existing_area()
-            return "y"
+            break
         elif area_name == "n":
             create_excavation_area()
-            return "n"
+            break
         else:
             print(f"\nAnswer invalid. Please enter either 'y' or 'n'")
     return True
@@ -50,7 +51,6 @@ def choose_existing_area():
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
-    global worksheet_to_update
     
     while True:
 
@@ -60,8 +60,8 @@ def choose_existing_area():
             print(f"\n{chosen_area} chosen\n")
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"{chosen_area}\n")
-            worksheet_to_update = SHEET.worksheet(f"{chosen_area}")
-            break
+            UPDATE_HISTORY.append(chosen_area)
+            return(chosen_area)
         else:
             print(f"{chosen_area} doesn't exist. Please choose an existing area.")
     return True
@@ -80,8 +80,7 @@ def create_excavation_area():
     print(f"{new_area_name} successfully created\n")
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"{new_area_name}")
-    global worksheet_to_update
-    worksheet_to_update = SHEET.worksheet(f"{new_area_name}")
+    UPDATE_HISTORY.append(new_area_name)
 
 def get_finds_data():
     """
@@ -154,7 +153,7 @@ def update_another_area():
         elif update_again == "n":
             os.system('cls' if os.name == 'nt' else 'clear')
             print("This session:\n")
-            print(f"{DAILY_REPORT}\n")
+            print(f"{SESSION_REPORT}\n")
             print("Thank you for choosing the ArchaeoTrack finds manager.")
             print("Happy digging!")
             break
@@ -179,13 +178,13 @@ def calculate_totals(finds_data):
     
     return new_totals
 
-def update_session_report(data):
+def update_session_report(data, worksheet):
     """
     Pushes the updated excavation area and its finds values to the report list
     """
-    full_sheet_str = str(worksheet_to_update).split("'")
+    full_sheet_str = str(worksheet).split("'")
     area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
-    DAILY_REPORT[f"{area_title}"] = str(f"{data}")
+    SESSION_REPORT[f"{area_title}"] = str(f"{data}")
 
 def main():
     """
@@ -194,12 +193,12 @@ def main():
     check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
-    update_worksheet(finds_data, worksheet_to_update)
+    
+    grab_sheet_for_updating = UPDATE_HISTORY[-1]
+    worksheet_to_update = SHEET.worksheet(f"{grab_sheet_for_updating}")
 
-    # full_sheet_str = str(worksheet_to_update).split("'")
-    # area_title = str([v for i, v in enumerate(full_sheet_str) if i % 2 == 1])
-    # DAILY_REPORT[f"{area_title}"] = str(f"{finds_data}")
-    update_session_report(finds_data)
+    update_worksheet(finds_data, worksheet_to_update)
+    update_session_report(finds_data, worksheet_to_update)
 
     new_totals = calculate_totals(finds_data)
     whole_site = SHEET.worksheet("whole_site")
