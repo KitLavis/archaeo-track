@@ -1,4 +1,5 @@
 import gspread
+import os
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -11,6 +12,7 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
+DAILY_REPORT = {}
 
 def check_log():
     """
@@ -56,6 +58,8 @@ def choose_existing_area():
 
         if chosen_area in area_titles:
             print(f"\n{chosen_area} chosen\n")
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(f"{chosen_area}\n")
             worksheet_to_update = SHEET.worksheet(f"{chosen_area}")
             break
         else:
@@ -74,6 +78,8 @@ def create_excavation_area():
     new_area.append_row(standard_headings)
     new_area.format('1', {'textFormat': {'bold': True}})
     print(f"{new_area_name} successfully created\n")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"{new_area_name}")
     global worksheet_to_update
     worksheet_to_update = SHEET.worksheet(f"{new_area_name}")
 
@@ -142,9 +148,12 @@ def update_another_area():
         update_again = input("Update another area? (y/n): ")
 
         if update_again == "y":
+            os.system('cls' if os.name == 'nt' else 'clear')
             main()
             break
         elif update_again == "n":
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(DAILY_REPORT)
             print("Thank you for choosing the ArchaeoTrack finds manager.")
             print("Happy digging!")
             break
@@ -177,6 +186,7 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     update_worksheet(finds_data, worksheet_to_update)
+    DAILY_REPORT[f"{worksheet_to_update}"] = f"{finds_data}"
     new_totals = calculate_totals(finds_data)
     whole_site = SHEET.worksheet("whole_site")
     update_worksheet(new_totals, whole_site)
