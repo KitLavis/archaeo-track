@@ -24,6 +24,7 @@ def check_log():
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
+    area_titles.sort()
     print(f"\nCurrent excavation areas:\n")
 
     for area_title in area_titles:
