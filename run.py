@@ -235,8 +235,19 @@ def update_daily_totals_sheet():
     session totals.
     """
     daily_sheet = SHEET.worksheet("daily_totals")
+    daily_sheet_vals = daily_sheet.get_all_values()
+    previous_day = daily_sheet_vals[-1]
     today_totals = [str(date.today())] + SESSION_TOTALS
-    daily_sheet.append_row(today_totals)
+    if today_totals[0] != previous_day[0]:
+        daily_sheet.append_row(today_totals)
+    else:
+        previous_day.pop(0)
+        previous_day = [int(num) for num in previous_day]
+        added_totals = [str(date.today())] + [x + y for x, y in zip(SESSION_TOTALS, previous_day)]
+        all_rows = daily_sheet.get_all_records()
+        last_row_index = len(all_rows) + 1
+        daily_sheet.delete_rows(last_row_index)
+        daily_sheet.append_row(added_totals)
 
 
 def update_all_time_totals():
