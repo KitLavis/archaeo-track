@@ -1,7 +1,7 @@
-import gspread
 import os
-import pyfiglet
 from datetime import date
+import gspread
+import pyfiglet
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -21,9 +21,12 @@ RUNNING_REPORT = {
 }
 
 def print_header(header):
-    T = header
-    ASCII_art_1 = pyfiglet.figlet_format(T)
-    print(ASCII_art_1)
+    """
+    Prints text as ASCII header style when called
+    """
+    text = header
+    header_text = pyfiglet.figlet_format(text)
+    print(header_text)
 
 def check_log():
     """
@@ -34,13 +37,12 @@ def check_log():
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
     area_titles.sort()
-    print(f"\nCurrent excavation areas:\n")
+    print("\nCurrent excavation areas:\n")
 
     for area_title in area_titles:
         print(area_title)
-    
     while True:
-        area_name = input(f"\nDoes a log for the area already exist? (y/n): ")
+        area_name = input("\nDoes a log for the area already exist? (y/n): ")
 
         if area_name == "y":
             choose_existing_area()
@@ -49,7 +51,7 @@ def check_log():
             create_excavation_area()
             break
         else:
-            print(f"\nAnswer invalid. Please enter either 'y' or 'n'")
+            print("\nAnswer invalid. Please enter either 'y' or 'n'")
     return True
 
 def choose_existing_area():
@@ -62,7 +64,6 @@ def choose_existing_area():
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
-    
     while True:
 
         chosen_area = input("Name of excavation area: ")
@@ -72,7 +73,7 @@ def choose_existing_area():
             UPDATE_HISTORY.append(chosen_area)
             os.system('cls' if os.name == 'nt' else 'clear')
             print_header(f"{chosen_area}")
-            return(chosen_area)
+            return chosen_area
         else:
             print(f"{chosen_area} doesn't exist. Please choose an existing area.")
     return True
@@ -102,17 +103,17 @@ def get_finds_data():
     while True:
         print("Enter number of each material type from the day's excavation.")
         print("Data should be 5 numbers seperated by commas in this order:")
-        print(f"ceramic,flint,bone,metal,other.\n")
+        print("ceramic,flint,bone,metal,other.\n")
 
         data_str = input("Enter finds numbers here: ")
 
         finds_data = data_str.split(",")
 
         if validate_data(finds_data):
-            print(f"\nFinds data is valid!\n")
+            print("\nFinds data is valid!\n")
             break
 
-    return (finds_data)
+    return finds_data
 
 def validate_data(values):
     """
@@ -130,7 +131,6 @@ def validate_data(values):
     except ValueError as e:
         print(f"Invalid data: {e}, please input again.\n")
         return False
-        
     return True
 
 def update_worksheet(data, worksheet):
@@ -157,7 +157,6 @@ def update_running_report(area, finds_data):
 
     for area_name in worksheet_name:
         RUNNING_REPORT[area_name] = str(finds_data)
-    
     print("Session so far:\n")
     for keys,values in RUNNING_REPORT.items():
         print(f"{keys} : {values}")
@@ -193,7 +192,8 @@ def update_another_area():
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
     return True
- 
+
+
 def calculate_all_time_totals():
     """
     Calculates the total number of each find type for the session
@@ -208,8 +208,8 @@ def calculate_all_time_totals():
     for total, todays_data in zip(current_total, SESSION_TOTALS):
         totals = int(total) + todays_data
         new_totals.append(totals)
-    
     return new_totals
+
 
 def update_session_totals(data):
     """
@@ -223,6 +223,10 @@ def update_session_totals(data):
         SESSION_TOTALS.append(x)
 
 def update_daily_totals_sheet():
+    """
+    Updates the daily_totals worksheet with todays date and the
+    session totals.
+    """
     daily_sheet = SHEET.worksheet("daily_totals")
     today_totals = [str(date.today())] + SESSION_TOTALS
     daily_sheet.append_row(today_totals)
@@ -248,14 +252,11 @@ def main():
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     date_finds_data = [today] + finds_data
-    
     grab_sheet_for_updating = UPDATE_HISTORY[-1]
     worksheet_to_update = SHEET.worksheet(f"{grab_sheet_for_updating}")
-    
     update_worksheet(date_finds_data, worksheet_to_update)
     update_session_totals(finds_data)
     update_running_report(worksheet_to_update, finds_data)
-
     update_another_area()
 
 main()
