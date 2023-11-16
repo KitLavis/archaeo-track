@@ -16,6 +16,9 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 SESSION_TOTALS = [0, 0, 0, 0, 0]
 UPDATE_HISTORY = []
+RUNNING_REPORT = {
+
+}
 
 def print_header(header):
     T = header
@@ -66,9 +69,9 @@ def choose_existing_area():
 
         if chosen_area in area_titles:
             print(f"\n{chosen_area} chosen\n")
+            UPDATE_HISTORY.append(chosen_area)
             os.system('cls' if os.name == 'nt' else 'clear')
             print_header(f"{chosen_area}")
-            UPDATE_HISTORY.append(chosen_area)
             return(chosen_area)
         else:
             print(f"{chosen_area} doesn't exist. Please choose an existing area.")
@@ -86,9 +89,9 @@ def create_excavation_area():
     new_area.append_row(standard_headings)
     new_area.format('1', {'textFormat': {'bold': True}})
     print(f"{new_area_name} successfully created\n")
+    UPDATE_HISTORY.append(new_area_name)
     os.system('cls' if os.name == 'nt' else 'clear')
     print_header(f"{new_area_name}")
-    UPDATE_HISTORY.append(new_area_name)
 
 def get_finds_data():
     """
@@ -138,10 +141,26 @@ def update_worksheet(data, worksheet):
     """
     worksheet_str = str(worksheet).split("'")
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
+
     for area_name in worksheet_name:
         print(f"Updating {area_name} finds...\n")
         worksheet.append_row(data)
         print(f"{area_name} finds updated!\n")
+
+def update_running_report(area, finds_data):
+    """
+    Updates RUNNING_REPORT dictionary and prints so the user sees
+    what they have done during the session
+    """
+    worksheet_str = str(area).split("'")
+    worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
+
+    for area_name in worksheet_name:
+        RUNNING_REPORT[area_name] = str(finds_data)
+    
+    print("Session so far:\n")
+    for keys,values in RUNNING_REPORT.items():
+        print(f"{keys} : {values}")
 
 
 def update_another_area():
@@ -154,7 +173,7 @@ def update_another_area():
     """
     while True:
 
-        update_again = input("Update another area? (y/n): ")
+        update_again = input("\nUpdate another area? (y/n): ")
 
         if update_again == "y":
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -167,8 +186,9 @@ def update_another_area():
             print_header("Thank You")
             print("for choosing the ArchaeoTrack finds manager.\n")
             print("Total finds this session:\n")
-            print(f"{SESSION_TOTALS}\n")
-            print("Happy digging!")
+            print("Ceramic | Flint | Bone | Metal | Other")
+            print(str(SESSION_TOTALS))
+            print("\nHappy digging!")
             break
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
@@ -234,6 +254,7 @@ def main():
     
     update_worksheet(date_finds_data, worksheet_to_update)
     update_session_totals(finds_data)
+    update_running_report(worksheet_to_update, finds_data)
 
     update_another_area()
 
