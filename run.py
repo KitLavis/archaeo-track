@@ -14,7 +14,7 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
-SESSION_REPORT = [0, 0, 0, 0, 0]
+SESSION_TOTALS = [0, 0, 0, 0, 0]
 UPDATE_HISTORY = []
 
 def print_header(header):
@@ -161,55 +161,61 @@ def update_another_area():
             main()
             break
         elif update_again == "n":
-            update_whole_site()
+            update_all_time_totals()
+            update_daily_totals_sheet()
             os.system('cls' if os.name == 'nt' else 'clear')
             print_header("Thank You")
             print("for choosing the ArchaeoTrack finds manager.\n")
             print("Total finds this session:\n")
-            print(f"{SESSION_REPORT}\n")
+            print(f"{SESSION_TOTALS}\n")
             print("Happy digging!")
             break
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
     return True
  
-def calculate_totals():
+def calculate_all_time_totals():
     """
     Calculates the total number of each find type for the session
     and adds them to the existing totals from the whole_site worksheet.
     """
-    whole_site = SHEET.worksheet("whole_site").get_all_values()
-    current_total = whole_site[-1]
+    all_time_totals = SHEET.worksheet("all_time_totals").get_all_values()
+    current_total = all_time_totals[-1]
     current_total.pop(0)
 
     new_totals = []
 
-    for total, todays_data in zip(current_total, SESSION_REPORT):
+    for total, todays_data in zip(current_total, SESSION_TOTALS):
         totals = int(total) + todays_data
         new_totals.append(totals)
     
     return new_totals
 
-def update_session_report(data):
+def update_session_totals(data):
     """
     Adds new finds data to existing session total and then appends to
-    SESSION_REPORT list
+    SESSION_TOTALS list
     """
-    new_total = [x + y for x, y in zip(SESSION_REPORT, data)]
-    SESSION_REPORT.clear()
+    new_total = [x + y for x, y in zip(SESSION_TOTALS, data)]
+    SESSION_TOTALS.clear()
 
     for x in new_total:
-        SESSION_REPORT.append(x)
+        SESSION_TOTALS.append(x)
 
-def update_whole_site():
+def update_daily_totals_sheet():
+    daily_sheet = SHEET.worksheet("daily_totals")
+    today_totals = [str(date.today())] + SESSION_TOTALS
+    daily_sheet.append_row(today_totals)
+
+def update_all_time_totals():
     """
     Triggers calculate_totals function. The new totals are then added
     to the whole_site worksheet.
     """
-    totals = calculate_totals()
-    date_totals = [str(date.today())] + totals
-    whole_site = SHEET.worksheet("whole_site")
-    update_worksheet(date_totals, whole_site)
+    calculated_totals = calculate_all_time_totals()
+    date_totals = [str(date.today())] + calculated_totals
+    all_time_totals = SHEET.worksheet("all_time_totals")
+    update_worksheet(date_totals, all_time_totals)
 
 def main():
     """
@@ -227,7 +233,7 @@ def main():
     worksheet_to_update = SHEET.worksheet(f"{grab_sheet_for_updating}")
     
     update_worksheet(date_finds_data, worksheet_to_update)
-    update_session_report(finds_data)
+    update_session_totals(finds_data)
 
     update_another_area()
 
