@@ -16,9 +16,8 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('archaeo_track')
 SESSION_TOTALS = [0, 0, 0, 0, 0]
 UPDATE_HISTORY = []
-RUNNING_REPORT = {
+RUNNING_REPORT = {}
 
-}
 
 def print_header(header):
     """
@@ -27,6 +26,7 @@ def print_header(header):
     text = header
     header_text = pyfiglet.figlet_format(text)
     print(header_text)
+
 
 def check_log():
     """
@@ -54,6 +54,7 @@ def check_log():
             print("\nAnswer invalid. Please enter either 'y' or 'n'")
     return True
 
+
 def choose_existing_area():
     """
     List of worksheets is converted into a string and list comprehension is used
@@ -78,6 +79,7 @@ def choose_existing_area():
             print(f"{chosen_area} doesn't exist. Please choose an existing area.")
     return True
 
+
 def create_excavation_area():
     """
     Creates new worksheet for the excavation area based on
@@ -93,6 +95,7 @@ def create_excavation_area():
     UPDATE_HISTORY.append(new_area_name)
     os.system('cls' if os.name == 'nt' else 'clear')
     print_header(f"{new_area_name}")
+
 
 def get_finds_data():
     """
@@ -115,6 +118,7 @@ def get_finds_data():
 
     return finds_data
 
+
 def validate_data(values):
     """
     Converts string values to integers so they can be used.
@@ -133,6 +137,7 @@ def validate_data(values):
         return False
     return True
 
+
 def update_worksheet(data, worksheet):
     """
     Recieves the new data to be inserted in the relevant worksheet
@@ -146,6 +151,7 @@ def update_worksheet(data, worksheet):
         print(f"Updating {area_name} finds...\n")
         worksheet.append_row(data)
         print(f"{area_name} finds updated!\n")
+
 
 def update_running_report(area, finds_data):
     """
@@ -222,6 +228,7 @@ def update_session_totals(data):
     for x in new_total:
         SESSION_TOTALS.append(x)
 
+
 def update_daily_totals_sheet():
     """
     Updates the daily_totals worksheet with todays date and the
@@ -230,6 +237,7 @@ def update_daily_totals_sheet():
     daily_sheet = SHEET.worksheet("daily_totals")
     today_totals = [str(date.today())] + SESSION_TOTALS
     daily_sheet.append_row(today_totals)
+
 
 def update_all_time_totals():
     """
@@ -240,6 +248,7 @@ def update_all_time_totals():
     date_totals = [str(date.today())] + calculated_totals
     all_time_totals = SHEET.worksheet("all_time_totals")
     update_worksheet(date_totals, all_time_totals)
+
 
 def main():
     """
