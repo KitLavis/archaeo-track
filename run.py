@@ -232,7 +232,8 @@ def update_session_totals(data):
 def update_daily_totals_sheet():
     """
     Updates the daily_totals worksheet with todays date and the
-    session totals.
+    session totals. If today's calculation already exists
+    it is overwritten with the new data
     """
     daily_sheet = SHEET.worksheet("daily_totals")
     daily_sheet_vals = daily_sheet.get_all_values()
@@ -253,12 +254,21 @@ def update_daily_totals_sheet():
 def update_all_time_totals():
     """
     Triggers calculate_totals function. The new totals are then added
-    to the whole_site worksheet.
+    to the whole_site worksheet. If today's calculation already exists
+    it is overwritten with the new data
     """
     calculated_totals = calculate_all_time_totals()
     date_totals = [str(date.today())] + calculated_totals
     all_time_totals = SHEET.worksheet("all_time_totals")
-    update_worksheet(date_totals, all_time_totals)
+    all_time_vals = all_time_totals.get_all_values()
+    previous_total = all_time_vals[-1]
+    if date_totals[0] != previous_total[0]:
+        update_worksheet(date_totals, all_time_totals)
+    else:
+        all_rows = all_time_totals.get_all_records()
+        last_row_index = len(all_rows) + 1
+        all_time_totals.delete_rows(last_row_index)
+        update_worksheet(date_totals, all_time_totals)
 
 
 def main():
