@@ -76,22 +76,36 @@ def choose_existing_area():
     area_titles = [
         v for i, v in enumerate(current_excavation_areas) if i % 2 == 1
     ]
-    while True:
 
-        chosen_area = input("\nName of excavation area: \n")
+    chosen_area = input("\nName of excavation area: \n")
 
-        if chosen_area in area_titles:
-            print(f"\n{chosen_area} chosen\n")
-            UPDATE_HISTORY.append(chosen_area)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print_header(f"{chosen_area}")
-            return chosen_area
-        else:
-            print(
-                f"{Fore.RED}{chosen_area} doesn't exist."
-                f"{Style.RESET_ALL} Please choose an existing area."
-            )
-    return True
+    if chosen_area in area_titles:
+        print(f"\n{chosen_area} chosen\n")
+        UPDATE_HISTORY.append(chosen_area)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print_header(f"{chosen_area}")
+    else:
+        print(
+            f"{Fore.RED}{chosen_area} doesn't exist."
+            f"{Style.RESET_ALL}"
+        )
+
+        while True:
+
+            create_new = input("\nWould you like to create a new area (y/n)?")
+
+            if create_new == "y":
+                create_excavation_area()
+                break
+            elif create_new == "n":
+                choose_existing_area()
+                break
+            else:
+                print(
+                    f"{Fore.RED}\nAnswer invalid."
+                    f"{Style.RESET_ALL} Please enter either 'y' or 'n'"
+                )
+        return True
 
 
 def create_excavation_area():
