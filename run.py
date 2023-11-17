@@ -1,3 +1,4 @@
+"""import os to clear terminal"""
 import os
 from datetime import date
 import gspread
@@ -32,11 +33,14 @@ def print_header(header):
 def check_log():
     """
     While loop asks if the excavation area already exists.
-    If yes then choose_area is triggered. If no then create_excavation_area
-    is triggered. If the answer is invalid then it returns true and starts again.
+    If yes then choose_area is triggered. If no then 
+    create_excavation_area is triggered. If the answer 
+    is invalid then it returns true and starts again.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
-    area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
+    area_titles = [
+        v for i, v in enumerate(current_excavation_areas) if i % 2 == 1
+        ]
     area_titles.sort()
     print("\nCurrent excavation areas:\n")
 
@@ -52,20 +56,26 @@ def check_log():
             create_excavation_area()
             break
         else:
-            print(f"{Fore.RED}\nAnswer invalid.{Style.RESET_ALL} Please enter either 'y' or 'n'")
+            print(
+                f"{Fore.RED}\nAnswer invalid."
+                f"{Style.RESET_ALL} Please enter either 'y' or 'n'"
+            )
     return True
 
 
 def choose_existing_area():
     """
-    List of worksheets is converted into a string and list comprehension is used
-    to remove the unnecessary data, leaving purely the area titles.
-    In the while loop the list is checked to see if it includes the area
+    List of worksheets is converted into a string and list 
+    comprehension is used to remove the unnecessary data,
+    leaving purely the area titles. In the while loop the 
+    list is checked to see if it includes the area
     inputted by the user. If so get_finds_data is triggered.
     If not then returns true and loop starts again.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
-    area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
+    area_titles = [
+        v for i, v in enumerate(current_excavation_areas) if i % 2 == 1
+    ]
     while True:
 
         chosen_area = input("\nName of excavation area: ")
@@ -77,7 +87,10 @@ def choose_existing_area():
             print_header(f"{chosen_area}")
             return chosen_area
         else:
-            print(f"{Fore.RED}{chosen_area} doesn't exist.{Style.RESET_ALL} Please choose an existing area.")
+            print(
+                f"{Fore.RED}{chosen_area} doesn't exist."
+                f"{Style.RESET_ALL} Please choose an existing area."
+            )
     return True
 
 
@@ -89,10 +102,17 @@ def create_excavation_area():
     standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
     new_area_name = input("\nName of new excavation area: ")
     print(f"\nCreating {new_area_name}...\n")
-    new_area = SHEET.add_worksheet(title = f"{new_area_name}", rows=100, cols=20)
+
+    new_area = SHEET.add_worksheet(
+        title = f"{new_area_name}", rows=100, cols=20
+    )
     new_area.append_row(standard_headings)
     new_area.format('1', {'textFormat': {'bold': True}})
-    print(f"{Fore.GREEN}{new_area_name} successfully created{Style.RESET_ALL}\n")
+
+    print(
+        f"{Fore.GREEN}{new_area_name} successfully created{Style.RESET_ALL}\n"
+    )
+
     UPDATE_HISTORY.append(new_area_name)
     os.system('cls' if os.name == 'nt' else 'clear')
     print_header(f"{new_area_name}")
@@ -124,7 +144,7 @@ def validate_data(values):
     """
     Converts string values to integers so they can be used.
     If not possible, or if there isn't exactly 5 values,
-    ValueError is raised
+    ValueError is raised.
     """
     try:
         [int(value) for value in values]
@@ -134,16 +154,20 @@ def validate_data(values):
             )
 
     except ValueError as e:
-        print(f"\n{Fore.RED}Invalid data:{Style.RESET_ALL} {e}, please input again.\n")
+        print(
+            f"\n{Fore.RED}Invalid data:"
+            f"{Style.RESET_ALL} {e}, please input again.\n"
+        )
         return False
     return True
 
 
 def update_worksheet(data, worksheet):
     """
-    Recieves the new data to be inserted in the relevant worksheet
-    List comprehension removes unneccessary info and leaves the area title.
-    For loop gets area title from the list and prints.
+    Recieves the new data to be inserted in the relevant 
+    worksheet. List comprehension removes unneccessary info 
+    and leaves the area title. For loop gets area title from 
+    the list and prints.
     """
     worksheet_str = str(worksheet).split("'")
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
@@ -157,8 +181,8 @@ def update_worksheet(data, worksheet):
 
 def update_running_report(area, finds_data):
     """
-    Updates RUNNING_REPORT dictionary and prints so the user sees
-    what they have done during the session
+    Updates RUNNING_REPORT dictionary and prints so the 
+    user sees what they have done during the session
     """
     worksheet_str = str(area).split("'")
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
@@ -166,17 +190,18 @@ def update_running_report(area, finds_data):
     for area_name in worksheet_name:
         RUNNING_REPORT[area_name] = str(finds_data)
         print("Session so far:\n")
+
     for keys,values in RUNNING_REPORT.items():
         print(f"{keys} : {values}")
 
 
 def update_another_area():
     """
-    While loop asks whether or not the user would like to update another area.
-    if 'y' then main() runs again and the program restarts.
-    If no then a whole site updates and goodbye message is printed.
-    Program then exists.
-    Loops until a correct answer is given
+    While loop asks whether or not the user would like to 
+    update another area. if 'y' then main() runs again 
+    and the program restarts. If no then the totals sheets
+    are updated and the program exits. Loops until a correct 
+    answer is given.
     """
     while True:
 
@@ -193,7 +218,10 @@ def update_another_area():
             program_exit()
             break
         else:
-            print(f"\n{Fore.RED}Invalid answer.{Style.RESET_ALL} Please answer either 'y' or 'n'.")
+            print(
+                f"\n{Fore.RED}Invalid answer."
+                f"{Style.RESET_ALL} Please answer either 'y' or 'n'."
+            )
     return True
 
 
@@ -216,8 +244,8 @@ def calculate_all_time_totals():
 
 def update_session_totals(data):
     """
-    Adds new finds data to existing session total and then appends to
-    SESSION_TOTALS list
+    Adds new finds data to existing session total and 
+    then appends to SESSION_TOTALS list
     """
     new_total = [x + y for x, y in zip(SESSION_TOTALS, data)]
     SESSION_TOTALS.clear()
@@ -228,22 +256,28 @@ def update_session_totals(data):
 
 def update_daily_totals_sheet():
     """
-    Updates the daily_totals worksheet with todays date and the
-    session totals. If today's calculation already exists
-    it is overwritten with the new data
+    Updates the daily_totals worksheet with todays date 
+    and the session totals. If today's calculation already
+    exists it is overwritten with the new data
     """
     daily_sheet = SHEET.worksheet("daily_totals")
     daily_sheet_vals = daily_sheet.get_all_values()
     previous_day = daily_sheet_vals[-1]
     today_totals = [str(date.today())] + SESSION_TOTALS
+
     if today_totals[0] != previous_day[0]:
         daily_sheet.append_row(today_totals)
     else:
         previous_day.pop(0)
         previous_day = [int(num) for num in previous_day]
-        added_totals = [str(date.today())] + [x + y for x, y in zip(SESSION_TOTALS, previous_day)]
+
+        added_totals = (
+            [str(date.today())] +
+            [x + y for x, y in zip(SESSION_TOTALS, previous_day)]
+        )
         all_rows = daily_sheet.get_all_records()
         last_row_index = len(all_rows) + 1
+
         daily_sheet.delete_rows(last_row_index)
         daily_sheet.append_row(added_totals)
 
@@ -256,9 +290,12 @@ def update_all_time_totals():
     """
     calculated_totals = calculate_all_time_totals()
     date_totals = [str(date.today())] + calculated_totals
+
     all_time_totals = SHEET.worksheet("all_time_totals")
     all_time_vals = all_time_totals.get_all_values()
+
     previous_total = all_time_vals[-1]
+
     if date_totals[0] != previous_total[0]:
         update_worksheet(date_totals, all_time_totals)
     else:
@@ -288,15 +325,19 @@ def main():
     print_header("ArchaeoTrack")
     print("The archaeological finds tracker!")
     today = str(date.today())
+
     check_log()
     data = get_finds_data()
     finds_data = [int(num) for num in data]
     date_finds_data = [today] + finds_data
+
     grab_sheet_for_updating = UPDATE_HISTORY[-1]
     worksheet_to_update = SHEET.worksheet(f"{grab_sheet_for_updating}")
     update_worksheet(date_finds_data, worksheet_to_update)
+
     update_session_totals(finds_data)
     update_running_report(worksheet_to_update, finds_data)
+
     update_another_area()
 
 main()
