@@ -86,13 +86,15 @@ def choose_existing_area():
         print_header(f"{chosen_area}")
     else:
         print(
-            f"{Fore.RED}{chosen_area} doesn't exist."
+            f"\n{Fore.RED}{chosen_area} doesn't exist."
             f"{Style.RESET_ALL}"
         )
 
         while True:
 
-            create_new = input("\nWould you like to create a new area (y/n)?")
+            create_new = input(
+                "\nWould you like to create a new area? (y/n): "
+            )
 
             if create_new == "y":
                 create_excavation_area()
