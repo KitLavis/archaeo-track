@@ -121,35 +121,47 @@ def create_excavation_area():
     ]
     standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
 
-    while True:
+    new_area_name = input("\nName of new excavation area: \n")
 
-        new_area_name = input("\nName of new excavation area: \n")
+    if new_area_name not in area_titles:
+        print(f"\nCreating {new_area_name}...\n")
 
-        if new_area_name not in area_titles:
-            print(f"\nCreating {new_area_name}...\n")
+        new_area = SHEET.add_worksheet(
+            title = f"{new_area_name}", rows=100, cols=20
+        )
+        new_area.append_row(standard_headings)
+        new_area.format('1', {'textFormat': {'bold': True}})
 
-            new_area = SHEET.add_worksheet(
-                title = f"{new_area_name}", rows=100, cols=20
-            )
-            new_area.append_row(standard_headings)
-            new_area.format('1', {'textFormat': {'bold': True}})
+        print(
+            f"{Fore.GREEN}{new_area_name}"
+            f"successfully created{Style.RESET_ALL}\n"
+        )
 
-            print(
-                f"{Fore.GREEN}{new_area_name}"
-                f"successfully created{Style.RESET_ALL}\n"
-            )
+        UPDATE_HISTORY.append(new_area_name)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print_header(f"{new_area_name}")
+    else:
+        print(
+            f"\n{Fore.RED}{new_area_name}"
+            f"{Style.RESET_ALL} already exists!"
+        )
 
-            UPDATE_HISTORY.append(new_area_name)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print_header(f"{new_area_name}")
-            break
-        else:
-            print(
-                f"{Fore.RED}{new_area_name}"
-                f"{Style.RESET_ALL} already exists!"
-            )
+        while True:
 
-    return True
+            update_area = input("\nUpdate an existing area? (y/n): \n")
+
+            if update_area == "y":
+                choose_existing_area()
+                break
+            elif update_area == "n":
+                create_excavation_area()
+                break
+            else:
+                print(
+                    f"{Fore.RED}\nAnswer invalid."
+                    f"{Style.RESET_ALL} Please enter either 'y' or 'n'"
+                )
+        return True
 
 
 def get_finds_data():
