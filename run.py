@@ -115,23 +115,41 @@ def create_excavation_area():
     Creates new worksheet for the excavation area based on
     data inputted by the user
     """
+    current_excavation_areas = str(SHEET.worksheets()).split("'")
+    area_titles = [
+        v for i, v in enumerate(current_excavation_areas) if i % 2 == 1
+    ]
     standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
-    new_area_name = input("\nName of new excavation area: \n")
-    print(f"\nCreating {new_area_name}...\n")
 
-    new_area = SHEET.add_worksheet(
-        title = f"{new_area_name}", rows=100, cols=20
-    )
-    new_area.append_row(standard_headings)
-    new_area.format('1', {'textFormat': {'bold': True}})
+    while True:
 
-    print(
-        f"{Fore.GREEN}{new_area_name} successfully created{Style.RESET_ALL}\n"
-    )
+        new_area_name = input("\nName of new excavation area: \n")
 
-    UPDATE_HISTORY.append(new_area_name)
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print_header(f"{new_area_name}")
+        if new_area_name not in area_titles:
+            print(f"\nCreating {new_area_name}...\n")
+
+            new_area = SHEET.add_worksheet(
+                title = f"{new_area_name}", rows=100, cols=20
+            )
+            new_area.append_row(standard_headings)
+            new_area.format('1', {'textFormat': {'bold': True}})
+
+            print(
+                f"{Fore.GREEN}{new_area_name}"
+                f"successfully created{Style.RESET_ALL}\n"
+            )
+
+            UPDATE_HISTORY.append(new_area_name)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print_header(f"{new_area_name}")
+            break
+        else:
+            print(
+                f"{Fore.RED}{new_area_name}"
+                f"{Style.RESET_ALL} already exists!"
+            )
+
+    return True
 
 
 def get_finds_data():
