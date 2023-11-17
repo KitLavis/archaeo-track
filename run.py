@@ -47,7 +47,7 @@ def check_log():
     for area_title in area_titles:
         print(area_title)
     while True:
-        area_name = input("\nDoes a log for the area already exist? (y/n): ")
+        area_name = input("\nDoes a log for the area already exist? (y/n): \n")
 
         if area_name == "y":
             choose_existing_area()
@@ -78,7 +78,7 @@ def choose_existing_area():
     ]
     while True:
 
-        chosen_area = input("\nName of excavation area: ")
+        chosen_area = input("\nName of excavation area: \n")
 
         if chosen_area in area_titles:
             print(f"\n{chosen_area} chosen\n")
@@ -100,7 +100,7 @@ def create_excavation_area():
     data inputted by the user
     """
     standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
-    new_area_name = input("\nName of new excavation area: ")
+    new_area_name = input("\nName of new excavation area: \n")
     print(f"\nCreating {new_area_name}...\n")
 
     new_area = SHEET.add_worksheet(
@@ -129,7 +129,7 @@ def get_finds_data():
         print("Data should be 5 numbers seperated by commas in this order:")
         print("ceramic,flint,bone,metal,other\n")
 
-        data_str = input("Enter finds numbers here: ")
+        data_str = input("Enter finds numbers here: \n")
 
         finds_data = data_str.split(",")
 
@@ -205,7 +205,7 @@ def update_another_area():
     """
     while True:
 
-        update_again = input("\nUpdate another area? (y/n): ")
+        update_again = input("\nUpdate another area? (y/n): \n")
 
         if update_again == "y":
             os.system('cls' if os.name == 'nt' else 'clear')
