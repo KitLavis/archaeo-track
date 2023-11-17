@@ -3,6 +3,7 @@ from datetime import date
 import gspread
 import pyfiglet
 from google.oauth2.service_account import Credentials
+from colorama import Fore, Style
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -51,7 +52,7 @@ def check_log():
             create_excavation_area()
             break
         else:
-            print("\nAnswer invalid. Please enter either 'y' or 'n'")
+            print(f"{Fore.RED}\nAnswer invalid.{Style.RESET_ALL} Please enter either 'y' or 'n'")
     return True
 
 
@@ -67,7 +68,7 @@ def choose_existing_area():
     area_titles = [v for i, v in enumerate(current_excavation_areas) if i % 2 == 1]
     while True:
 
-        chosen_area = input("Name of excavation area: ")
+        chosen_area = input("\nName of excavation area: ")
 
         if chosen_area in area_titles:
             print(f"\n{chosen_area} chosen\n")
@@ -76,7 +77,7 @@ def choose_existing_area():
             print_header(f"{chosen_area}")
             return chosen_area
         else:
-            print(f"{chosen_area} doesn't exist. Please choose an existing area.")
+            print(f"{Fore.RED}{chosen_area} doesn't exist.{Style.RESET_ALL} Please choose an existing area.")
     return True
 
 
@@ -86,12 +87,12 @@ def create_excavation_area():
     data inputted by the user
     """
     standard_headings = ["date", "ceramic", "flint", "bone", "metal", "other"]
-    new_area_name = input("Name of new excavation area: ")
+    new_area_name = input("\nName of new excavation area: ")
     print(f"\nCreating {new_area_name}...\n")
     new_area = SHEET.add_worksheet(title = f"{new_area_name}", rows=100, cols=20)
     new_area.append_row(standard_headings)
     new_area.format('1', {'textFormat': {'bold': True}})
-    print(f"{new_area_name} successfully created\n")
+    print(f"{Fore.GREEN}{new_area_name} successfully created{Style.RESET_ALL}\n")
     UPDATE_HISTORY.append(new_area_name)
     os.system('cls' if os.name == 'nt' else 'clear')
     print_header(f"{new_area_name}")
@@ -106,14 +107,14 @@ def get_finds_data():
     while True:
         print("Enter number of each material type from the day's excavation.")
         print("Data should be 5 numbers seperated by commas in this order:")
-        print("ceramic,flint,bone,metal,other.\n")
+        print("ceramic,flint,bone,metal,other\n")
 
         data_str = input("Enter finds numbers here: ")
 
         finds_data = data_str.split(",")
 
         if validate_data(finds_data):
-            print("\nFinds data is valid!\n")
+            print(f"{Fore.GREEN}\nFinds data is valid!{Style.RESET_ALL}")
             break
 
     return finds_data
@@ -133,7 +134,7 @@ def validate_data(values):
             )
 
     except ValueError as e:
-        print(f"Invalid data: {e}, please input again.\n")
+        print(f"\n{Fore.RED}Invalid data:{Style.RESET_ALL} {e}, please input again.\n")
         return False
     return True
 
@@ -148,9 +149,10 @@ def update_worksheet(data, worksheet):
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
 
     for area_name in worksheet_name:
-        print(f"Updating {area_name} finds...\n")
+        print(f"\nUpdating {area_name} finds...\n")
         worksheet.append_row(data)
-        print(f"{area_name} finds updated!\n")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"{Fore.GREEN}{area_name} finds updated!{Style.RESET_ALL}\n")
 
 
 def update_running_report(area, finds_data):
@@ -163,7 +165,7 @@ def update_running_report(area, finds_data):
 
     for area_name in worksheet_name:
         RUNNING_REPORT[area_name] = str(finds_data)
-    print("Session so far:\n")
+        print("Session so far:\n")
     for keys,values in RUNNING_REPORT.items():
         print(f"{keys} : {values}")
 
@@ -191,7 +193,7 @@ def update_another_area():
             program_exit()
             break
         else:
-            print("Invalid answer. Please answer either 'y' or 'n'.")
+            print(f"\n{Fore.RED}Invalid answer.{Style.RESET_ALL} Please answer either 'y' or 'n'.")
     return True
 
 
@@ -273,7 +275,7 @@ def program_exit():
     """
     print_header("Thank You")
     print("for choosing the ArchaeoTrack finds manager.\n")
-    print("Total finds this session:\n")
+    print("Total finds from this session:\n")
     print("Ceramic | Flint | Bone | Metal | Other")
     print(str(SESSION_TOTALS))
     print("\nHappy digging!")
