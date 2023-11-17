@@ -310,11 +310,20 @@ def program_exit():
     Prints exist messages and the total finds entered this session
     then exists the program
     """
+    all_time_totals = SHEET.worksheet("all_time_totals")
+    all_time_vals = all_time_totals.get_all_values()
+
+    latest_totals_str = all_time_vals[-1]
+    latest_totals_str.pop(0)
+
+    latest_totals = [int(total) for total in latest_totals_str]
+
     print_header("Thank You")
     print("for choosing the ArchaeoTrack finds manager.\n")
     print("Total finds from this session:\n")
-    print("Ceramic | Flint | Bone | Metal | Other")
-    print(str(SESSION_TOTALS))
+    print("Material type: Ceramic, flint, bone, metal, other")
+    print("Session totals: ", SESSION_TOTALS)
+    print("Totals to date: ", latest_totals)
     print("\nHappy digging!")
 
 
