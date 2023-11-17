@@ -188,12 +188,7 @@ def update_another_area():
             update_all_time_totals()
             update_daily_totals_sheet()
             os.system('cls' if os.name == 'nt' else 'clear')
-            print_header("Thank You")
-            print("for choosing the ArchaeoTrack finds manager.\n")
-            print("Total finds this session:\n")
-            print("Ceramic | Flint | Bone | Metal | Other")
-            print(str(SESSION_TOTALS))
-            print("\nHappy digging!")
+            program_exit()
             break
         else:
             print("Invalid answer. Please answer either 'y' or 'n'.")
@@ -269,6 +264,19 @@ def update_all_time_totals():
         last_row_index = len(all_rows) + 1
         all_time_totals.delete_rows(last_row_index)
         update_worksheet(date_totals, all_time_totals)
+
+
+def program_exit():
+    """
+    Prints exist messages and the total finds entered this session
+    then exists the program
+    """
+    print_header("Thank You")
+    print("for choosing the ArchaeoTrack finds manager.\n")
+    print("Total finds this session:\n")
+    print("Ceramic | Flint | Bone | Metal | Other")
+    print(str(SESSION_TOTALS))
+    print("\nHappy digging!")
 
 
 def main():
