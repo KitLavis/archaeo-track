@@ -33,9 +33,10 @@ def print_header(header):
 def check_log():
     """
     While loop asks if the excavation area already exists.
-    If yes then choose_area is triggered. If no then 
-    create_excavation_area is triggered. If the answer 
-    is invalid then it returns true and starts again.
+    If yes then choose_area is triggered.
+    If no then create_excavation_area is triggered.
+    If the answer is invalid then it returns true
+    and starts again.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [
@@ -65,12 +66,15 @@ def check_log():
 
 def choose_existing_area():
     """
-    List of worksheets is converted into a string and list 
-    comprehension is used to remove the unnecessary data,
-    leaving purely the area titles. In the while loop the 
-    list is checked to see if it includes the area
-    inputted by the user. If so get_finds_data is triggered.
-    If not then returns true and loop starts again.
+    List of worksheets is converted into a string.
+    list comprehension is used to remove the unnecessary
+    data, leaving purely the area titles.
+    
+    In the while loop the list is checked to see if 
+    it includes the area inputted by the user.
+    
+    If so get_finds_data is triggered. If not the user
+    is asked if they want to create a new area.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [
@@ -114,6 +118,11 @@ def create_excavation_area():
     """
     Creates new worksheet for the excavation area based on
     data inputted by the user
+    List comprehension leaves the area titles. Data inputted
+    is checked to see that it is not an existing area.
+    If not in is True, a new area is created.
+    If False, user is asked if they'd like to choose an
+    existing area.
     """
     current_excavation_areas = str(SHEET.worksheets()).split("'")
     area_titles = [
@@ -189,8 +198,8 @@ def get_finds_data():
 def validate_data(values):
     """
     Converts string values to integers so they can be used.
-    If not possible, or if there isn't exactly 5 values,
-    ValueError is raised.
+    If not possible due to the string values not being numbers
+    or if there isn't exactly 5 values, ValueError is raised.
     """
     try:
         [int(value) for value in values]
@@ -244,7 +253,7 @@ def update_running_report(area, finds_data):
 def update_another_area():
     """
     While loop asks whether or not the user would like to 
-    update another area. if 'y' then main() runs again 
+    update another area. If 'y' then main() runs again 
     and the program restarts. If no then the totals sheets
     are updated and the program exits. Loops until a correct 
     answer is given.
@@ -330,9 +339,10 @@ def update_daily_totals_sheet():
 
 def update_all_time_totals():
     """
-    Triggers calculate_totals function. The new totals are then added
-    to the whole_site worksheet. If today's calculation already exists
-    it is overwritten with the new data
+    Triggers calculate_totals function. The new totals are
+    then added to the whole_site worksheet. If today's
+    calculation already exists it is overwritten with the
+    new data.
     """
     calculated_totals = calculate_all_time_totals()
     date_totals = [str(date.today())] + calculated_totals
@@ -353,8 +363,9 @@ def update_all_time_totals():
 
 def program_exit():
     """
-    Prints exist messages and the total finds entered this session
-    then exists the program
+    Prints exit messages, the total finds entered this
+    session and the total finds to date then exits the
+    program.
     """
     all_time_totals = SHEET.worksheet("all_time_totals")
     all_time_vals = all_time_totals.get_all_values()
