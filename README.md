@@ -61,17 +61,31 @@ Once the user has decided all of the finds data for the day is inputted they are
 
 ![Area already exists warning](docs/images/invalid_new_area.webp)
 
+If the user has decided to create a log for a new area, but they enter the name of an area that already exists, they are thrown this warning. They are then asked whether or not they would like to update an existing area.
+
 - Area doesn't exist
 
 ![Area doesn't exist warning](docs/images/invalid_existing_area.webp)
+
+If the user has decided to update an area for which a log already exists, but they enter an incorrect area name, this warning is given. They are then asked whether or not they would like to create a new area.
 
 - Data can't be converted to integer
 
 ![ValueError: data can't be converted](docs/images/invalid_data_int.webp)
 
+If the user inputs the incorrect data type when the finds data is being collected, the data cannot be converted to an integer. The user is thrown this error and asked to input the data again.
+
 - Not enough values inputted
 
 ![ValueError: not enough values](docs/images/invalid_data.webp)
+
+If the user does not input enough values when the finds data is being collected, they are thrown this error message and asked to input the data again.
+
+- Yes or no questions invalid input
+
+![Invalid y/n answer](docs/images/invalid_answer.webp)
+
+As has been explained throughout the features section, often the user is asked to answer a quesiotn with either "y" representing yes, or "n" representing no. In each case, if something other than "y" or "n" is entered, the user is given this warning, and asked to answer again.
 
 ### Future Features
 
