@@ -31,20 +31,45 @@ Due to the nature of the application being function rather than fun, visual desi
 ### Existing Features
 
 - Introduction Screen
+
 ![Introduction Screen](docs/images/intro.webp)
 
+The introduction screen is shown when the user starts the program. The name of the program is emphasised at the top of the screen with ASCII art, and a brief description of the program is underneath. If a log for the excavation area exists, it is shown in the list. The user is asked whether the area they want to update already exists. If so they enter "y" and are asked to enter the name of the area. If they answer "n" they are asked to enter the name of the excavation area they to create a log for. If they answer incorrectly they are warned and are asked to input again. Examples of this can be seen in the [invalid data handling section](#Invalid-Data-Handling).
+
 - Finds data collection
+
 ![Data collection](docs/images/data_collection.webp)
 
+Once an area is correctly selected, the user moves onto the data collection screen. Here they can enter the number of pieces of each material type found today in that excavation area. Instructions are given on how to input this data correctly. If inputted incorrectly, the user is warned and are asked to input again. This can be seen in the [invalid data handling section](#Invalid-Data-Handling).
+The correctly inputted data is then updated on the relevant worksheet on the Google Sheets spreadsheet, and is added to the session totals list and the running report list.
+
 - Succesfull Update Screen
+
 ![Successfull Update Screen](docs/images/second_trench_updated.webp)
 
-- Invalid Data Handling
+Once the finds data is inputted correctly, the user arrives at the next screen. Here they are told the log was successfully updated, which is emphasised by the use of green text, they are shown the running report, so they have a reminder of what has already been inputted, and finally they are asked whether or not they would like to update another area. If they answer "y", they are taken back to the introduction screen, and the process starts again. If they answer "n" they are moved on to the exit screen. Much like the instances where the user is asked to input either "y" or "n", if inputted incorrectly the user is warned and asked to try again.
+
+- Exit Screen
+
+![Exit Screen](docs/images/end_screen.webp)
+
+Once the user has decided all of the finds data for the day is inputted they are moved on to the exit screen. Here they area thanked for using the service, and are shown the total finds from the session and the total finds to date.
+
+### Invalid Data Handling
+
+- Area Already Exists
+
 ![Area already exists warning](docs/images/invalid_new_area.webp)
+
+- Area doesn't exist
 
 ![Area doesn't exist warning](docs/images/invalid_existing_area.webp)
 
+- Data can't be converted to integer
+
 ![ValueError: data can't be converted](docs/images/invalid_data_int.webp)
+
+- Not enough values inputted
 
 ![ValueError: not enough values](docs/images/invalid_data.webp)
 
