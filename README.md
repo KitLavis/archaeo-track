@@ -89,7 +89,15 @@ As has been explained throughout the features section, often the user is asked t
 
 ### Future Features
 
+Due to time constraints, there are a number of features yet to be implemented. For example:
+- In future the user will have the ability to edit the existing rows of data from within the program. This will then automatically update the relevant sheets.
+- The user will also be able to delete logs/sheets from the terminal.
+- If the user attempts to update an area for which a log for the day already exists, they will be shown the day's log and asked if they still want to update it. This is to prevent data being inputted twice.
+- To do all of the above, the user must also have the ability to view all existing data from within the terminal, so that is also a feature to be implemented in the future.
+
 #### Ease of Future Development
+
+
 
 ## Tools and Technologies
 
