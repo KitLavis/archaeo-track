@@ -97,9 +97,22 @@ Due to time constraints, there are a number of features yet to be implemented. F
 
 #### Ease of Future Development
 
-
+A number of steps were taken in order to make future development as simple as possible. One of these is that each function is clearly commented with concise detail, in order to explain what each part of the function does. This would help any future developer to understand what they are looking at, even if they have never read the code before. All variables and functions are named according to what they are or what they do, making it easy to understand. The code is also well spaced and adhears to the PEP8 python standards, to keep the readability of the code as a high a standard as possible.
 
 ## Tools and Technologies
+
+- Python was the programming used.
+- The Code Institute's mock terminal template was used to create the terminal.
+- ASCII art was used to create the header styling in the terminal.
+- Google Sheets was used to store the data.
+- Gspread was imported to the project to allow manipulation of the Google Sheets spreadsheet from the terminal.
+- Pyfiglet was imported to the project to get immediate warning and error message related to the standard python PEP8 style.
+- Datetime was imported to the project to allow for the data to be inputted into the spreadsheet with date information.
+- Colorama was imported to allow for coloured text within the terminal.
+- Git was used for version control.
+- GitHub was used to store the code.
+- GitPod was the online IDE used.
+- Am I Responsive was used to create the image at the top of this document.
 
 ## Testing and Validation
 
