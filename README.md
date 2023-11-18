@@ -1,32 +1,35 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# ArchaeoTrack
+ArchaeoTrack is a Python terminal application, which runs in the Code Institute mock terminal on Heroku.
 
-Welcome,
+It is an archaeological finds manager which tracks the number of finds from each day of excavation, calculates the daily and all time totals of each material type, then stores the data on Google Sheets.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+[Live deployment link](https://archaeo-track-cd104451ef31.herokuapp.com/)
+![Am I Responsive image](docs/images/am-i-responsive.webp)
 
-## Reminders
+## Planning
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+### Porject Aims
 
-## Creating the Heroku app
+### Design
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## Features
 
-1. `heroku/python`
-2. `heroku/nodejs`
+### Existing Features
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+### Future Features
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+#### Ease of Future Development
 
-Connect your GitHub repository and deploy as normal.
+## Tools and Technologies
 
-## Constraints
+## Testing and Validation
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+### Validation
 
----
+### Manual Testing
 
-Happy coding!
+### Bug Fixing
+
+## Deployment
+
+## Credits
