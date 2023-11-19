@@ -239,7 +239,7 @@ def update_running_report(area, finds_data):
         print("Session so far:\n")
 
     for keys, values in RUNNING_REPORT.items():
-        print(f"{keys} : {values}")
+        print(f"{Fore.YELLOW}{keys} : {values}{Style.RESET_ALL}")
 
 
 def update_another_area():
@@ -371,9 +371,9 @@ def program_exit():
     print("for choosing the ArchaeoTrack finds manager.\n")
     print("Total finds from this session:\n")
     print("Material type: Ceramic, flint, bone, metal, other")
-    print("Session totals: ", SESSION_TOTALS)
+    print(f"{Fore.YELLOW}Session totals: ", SESSION_TOTALS)
     print("Totals to date: ", latest_totals)
-    print("\nHappy digging!")
+    print(f"{Style.RESET_ALL}\nHappy digging!")
 
 
 def main():
