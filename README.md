@@ -105,10 +105,11 @@ A number of steps were taken in order to make future development as simple as po
 - The Code Institute's mock terminal template was used to create the terminal.
 - ASCII art was used to create the header styling in the terminal.
 - Google Sheets was used to store the data.
-- Gspread was imported to the project to allow manipulation of the Google Sheets spreadsheet from the terminal.
-- Pyfiglet was imported to the project for constant [validation](#Validation).
-- Datetime was imported to the project to allow for the data to be inputted into the spreadsheet with date information.
-- Colorama was imported to allow for coloured text within the terminal.
+- google.oauth2.service_account was used to allow the program to access data held in Google Sheets
+- gspread was imported to the project to allow manipulation of the Google Sheets spreadsheet from the terminal.
+- pyfiglet was imported to the project for constant [validation](#Validation).
+- datetime was imported to the project to allow for the data to be inputted into the spreadsheet with date information.
+- colorama was imported to allow for coloured text within the terminal.
 - Git was used for version control.
 - GitHub was used to store the code.
 - GitPod was the online IDE used.
@@ -120,6 +121,8 @@ A number of steps were taken in order to make future development as simple as po
 ### Validation
 
 As previously mentioned in the [tools and technologies secion](#Tools-and-Technologies), pyfiglet was used for constant linting and validation during the coding process, making sure all code is syntactically and stylistically correct, according to the standard PEP 8 style.
+To date only one warning remains:
+- line 207: "[int(value) for value in values]" is assigned to nothing
 
 ### Bug Finding and Fixing
 

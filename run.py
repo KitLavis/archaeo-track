@@ -69,10 +69,10 @@ def choose_existing_area():
     List of worksheets is converted into a string.
     list comprehension is used to remove the unnecessary
     data, leaving purely the area titles.
-    
-    In the while loop the list is checked to see if 
+
+    In the while loop the list is checked to see if
     it includes the area inputted by the user.
-    
+
     If so get_finds_data is triggered. If not the user
     is asked if they want to create a new area.
     """
@@ -136,7 +136,7 @@ def create_excavation_area():
         print(f"\nCreating {new_area_name}...\n")
 
         new_area = SHEET.add_worksheet(
-            title = f"{new_area_name}", rows=100, cols=20
+            title=f"{new_area_name}", rows=100, cols=20
         )
         new_area.append_row(standard_headings)
         new_area.format('1', {'textFormat': {'bold': True}})
@@ -221,9 +221,9 @@ def validate_data(values):
 
 def update_worksheet(data, worksheet):
     """
-    Recieves the new data to be inserted in the relevant 
-    worksheet. List comprehension removes unneccessary info 
-    and leaves the area title. For loop gets area title from 
+    Recieves the new data to be inserted in the relevant
+    worksheet. List comprehension removes unneccessary info
+    and leaves the area title. For loop gets area title from
     the list and prints.
     Credit: Code Institute's Love Sandwiches walkthrough project.
     """
@@ -239,7 +239,7 @@ def update_worksheet(data, worksheet):
 
 def update_running_report(area, finds_data):
     """
-    Updates RUNNING_REPORT dictionary and prints so the 
+    Updates RUNNING_REPORT dictionary and prints so the
     user sees what they have done during the session
     """
     worksheet_str = str(area).split("'")
@@ -249,16 +249,16 @@ def update_running_report(area, finds_data):
         RUNNING_REPORT[area_name] = str(finds_data)
         print("Session so far:\n")
 
-    for keys,values in RUNNING_REPORT.items():
+    for keys, values in RUNNING_REPORT.items():
         print(f"{keys} : {values}")
 
 
 def update_another_area():
     """
-    While loop asks whether or not the user would like to 
-    update another area. If yes then main() runs again 
+    While loop asks whether or not the user would like to
+    update another area. If yes then main() runs again
     and the program restarts. If no then the totals sheets
-    are updated and the program exits. Loops until a correct 
+    are updated and the program exits. Loops until a correct
     answer is given.
     """
     while True:
@@ -303,7 +303,7 @@ def calculate_all_time_totals():
 
 def update_session_totals(data):
     """
-    Adds new finds data to existing session total and 
+    Adds new finds data to existing session total and
     then appends to SESSION_TOTALS list
     """
     new_total = [x + y for x, y in zip(SESSION_TOTALS, data)]
@@ -315,7 +315,7 @@ def update_session_totals(data):
 
 def update_daily_totals_sheet():
     """
-    Updates the daily_totals worksheet with todays date 
+    Updates the daily_totals worksheet with todays date
     and the session totals. If today's calculation already
     exists it is overwritten with the new data
     """
@@ -409,5 +409,6 @@ def main():
     update_running_report(worksheet_to_update, finds_data)
 
     update_another_area()
+
 
 main()
