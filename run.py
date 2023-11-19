@@ -177,7 +177,8 @@ def get_finds_data():
     """
     Get finds data from the user.
     While loop repeatedly requests data from the user until
-    they input a valid string of 5 numbers seperated by commas
+    they input a valid string of 5 numbers seperated by commas.
+    Credit: Code Institute's Love Sandwiches walkthrough project.
     """
     while True:
         print("Enter number of each material type from the day's excavation.")
@@ -200,6 +201,7 @@ def validate_data(values):
     Converts string values to integers so they can be used.
     If not possible due to the string values not being numbers
     or if there isn't exactly 5 values, ValueError is raised.
+    Credit: Code Institute's Love Sandwiches walkthrough project.
     """
     try:
         [int(value) for value in values]
@@ -223,6 +225,7 @@ def update_worksheet(data, worksheet):
     worksheet. List comprehension removes unneccessary info 
     and leaves the area title. For loop gets area title from 
     the list and prints.
+    Credit: Code Institute's Love Sandwiches walkthrough project.
     """
     worksheet_str = str(worksheet).split("'")
     worksheet_name = [v for i, v in enumerate(worksheet_str) if i % 2 == 1]
@@ -253,7 +256,7 @@ def update_running_report(area, finds_data):
 def update_another_area():
     """
     While loop asks whether or not the user would like to 
-    update another area. If 'y' then main() runs again 
+    update another area. If yes then main() runs again 
     and the program restarts. If no then the totals sheets
     are updated and the program exits. Loops until a correct 
     answer is given.
@@ -284,6 +287,7 @@ def calculate_all_time_totals():
     """
     Calculates the total number of each find type for the session
     and adds them to the existing totals from the whole_site worksheet.
+    Credit: Code Institute's Love Sandwiches walkthrough project.
     """
     all_time_totals = SHEET.worksheet("all_time_totals").get_all_values()
     current_total = all_time_totals[-1]

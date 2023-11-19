@@ -125,3 +125,8 @@ A number of steps were taken in order to make future development as simple as po
 ## Deployment
 
 ## Credits
+
+| Source | Usage |
+| -------| ----- |
+| Code institute | Four functions from the Love Sandwiches walkthrough project: get_finds_date, validate_data, update_worksheet and calculate_all_time_totals  |
+| Code Institute | Mock terminal template for deployment |
