@@ -369,7 +369,6 @@ def program_exit():
 
     print_header("Thank You")
     print("for choosing the ArchaeoTrack finds manager.\n")
-    print("Total finds from this session:\n")
     print("Material type: Ceramic, flint, bone, metal, other")
     print(f"{Fore.YELLOW}Session totals: ", SESSION_TOTALS)
     print("Totals to date: ", latest_totals)
