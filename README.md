@@ -110,6 +110,7 @@ A number of steps were taken in order to make future development as simple as po
 - pyfiglet was imported to the project for constant [validation](#Validation).
 - datetime was imported to the project to allow for the data to be inputted into the spreadsheet with date information.
 - colorama was imported to allow for coloured text within the terminal.
+- os was imported to clear the terminal when called.
 - Git was used for version control.
 - GitHub was used to store the code.
 - GitPod was the online IDE used.
@@ -121,8 +122,8 @@ A number of steps were taken in order to make future development as simple as po
 ### Validation
 
 As previously mentioned in the [tools and technologies secion](#Tools-and-Technologies), pyfiglet was used for constant linting and validation during the coding process, making sure all code is syntactically and stylistically correct, according to the standard PEP 8 style.
-To date only one warning remains:
-- line 207: "[int(value) for value in values]" is assigned to nothing
+
+Code Institute's python linter was also used for validation, and returned the message "All clear, no errors found".
 
 ### Bug Finding and Fixing
 
@@ -131,6 +132,18 @@ Throughout the coding process whenever a new feature was added, it was thoroughl
 - Invalid names being accepted as an existing area. At first when choosing an existing area, if the user inputted part of an area name but not the full name e.g. *trench_0* the program would accept it as a valid input, and then throw an error saying the relevant sheet doesn't exist. This was solved by splitting and enumerating the sheet names grabbed using gspread. For example: original title "worksheet 'trench_02' id:03" - new title "trench_02".
 
 ## Deployment
+This site was deployed on Heroku, using the Code Institute mock terminal:
+
+1. Create a Heroku account or sign in
+2. Click "create new app"
+3. Enter app name and your region
+4. Navigate to the "settings" section and click "reveal Config Vars" in the "config vars" section
+5. Enter the key "PORT" with a value of "8000"
+6. Add Python and NodeJS buildpacks
+7. Navigate to the "Deploy" section at the top of the page
+8. Choose GitHub as the deployment method
+9. Connect to Github and type in your repository name, or alternatively search for the repository.
+10. Choose either automatic or manual deployment and then click "deploy"
 
 ## Credits
 
