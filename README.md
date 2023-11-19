@@ -47,7 +47,9 @@ The correctly inputted data is then updated on the relevant worksheet on the Goo
 
 ![Successfull Update Screen](docs/images/session_so_far.webp)
 
-Once the finds data is inputted correctly, the user arrives at the next screen. Here they are told the log was successfully updated, which is emphasised by the use of green text, they are shown the running report in yellow, so they have a reminder of what has already been inputted, and finally they are asked whether or not they would like to update another area. If they answer "y", they are taken back to the introduction screen, and the process starts again. If they answer "n" they are moved on to the exit screen. Much like the instances where the user is asked to input either "y" or "n", if inputted incorrectly the user is warned and asked to try again.
+Once the finds data is inputted correctly, the data is stored in the Google sheet (see example below) and the user arrives at the next screen. Here they are told the log was successfully updated, which is emphasised by the use of green text, they are shown the running report in yellow, so they have a reminder of what has already been inputted, and finally they are asked whether or not they would like to update another area with a yes/no question.
+
+![Stored data example](docs/images/sheet_example.webp)
 
 - Exit Screen
 
