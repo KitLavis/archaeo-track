@@ -24,7 +24,7 @@ Before work began on the coding side of the project, a flowchart was produced to
 ![ArchaeoTrack Flowchart](docs/images/archaeo-track-flowchart.webp)
 
 ### Design
-Due to the nature of the application being function rather than fun, visual design was kept to a bare minimum. Headings are emphasised using ASCII art, red text is used to highlight invalid data, and green text is used to highglight valid data and successful updates.
+Due to the nature of the application being function rather than fun, visual design was kept to a bare minimum. Headings are emphasised using ASCII art, red text is used to highlight invalid data, green text is used to highglight valid data and successful updates, and yellow text is used when printing totals.
 
 ## Features
 
