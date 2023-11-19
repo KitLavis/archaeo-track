@@ -106,21 +106,26 @@ A number of steps were taken in order to make future development as simple as po
 - ASCII art was used to create the header styling in the terminal.
 - Google Sheets was used to store the data.
 - Gspread was imported to the project to allow manipulation of the Google Sheets spreadsheet from the terminal.
-- Pyfiglet was imported to the project to get immediate warning and error message related to the standard python PEP8 style.
+- Pyfiglet was imported to the project for constant [validation](#Validation).
 - Datetime was imported to the project to allow for the data to be inputted into the spreadsheet with date information.
 - Colorama was imported to allow for coloured text within the terminal.
 - Git was used for version control.
 - GitHub was used to store the code.
 - GitPod was the online IDE used.
+- Heroku was used for [deployment](#Deployment).
 - Am I Responsive was used to create the image at the top of this document.
 
 ## Testing and Validation
 
 ### Validation
 
-### Manual Testing
+As previously mentioned in the [tools and technologies secion](#Tools-and-Technologies), pyfiglet was used for constant linting and validation during the coding process, making sure all code is syntactically and stylistically correct, according to the standard PEP 8 style.
 
-### Bug Fixing
+### Bug Finding and Fixing
+
+Throughout the coding process whenever a new feature was added, it was thoroughly manually tested to ensure correct functionality. A number of different data types were inputted, correct and incorrect, valid and invalid, so that all possible bases were covered. This testing process gave light to a small number of issues that needed to be resolved in order the project to move forward. These included:
+- All time totals would throw an error and not calculate when the user inputted data for the first time. This was because the first row of cells of the all time totals sheet had no values, therefore no total could be calculated. This was solved by adding zeroes to the first row of cells before inputting any data into the application.
+- Invalid names being accepted as an existing area. At first when choosing an existing area, if the user inputted part of an area name but not the full name e.g. *trench_0* the program would accept it as a valid input, and then throw an error saying the relevant sheet doesn't exist. This was solved by splitting and enumerating the sheet names grabbed using gspread. For example: original title "worksheet 'trench_02' id:03" - new title "trench_02".
 
 ## Deployment
 
