@@ -101,7 +101,7 @@ A number of steps were taken in order to make future development as simple as po
 
 ## Tools and Technologies
 
-- Python was the programming used.
+- Python was the programming language used.
 - The Code Institute's mock terminal template was used to create the terminal.
 - ASCII art was used to create the header styling in the terminal.
 - Google Sheets was used to store the data.
