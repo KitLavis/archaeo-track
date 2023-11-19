@@ -45,15 +45,15 @@ The correctly inputted data is then updated on the relevant worksheet on the Goo
 
 - Succesfull Update Screen
 
-![Successfull Update Screen](docs/images/second_trench_updated.webp)
+![Successfull Update Screen](docs/images/session_so_far.webp)
 
-Once the finds data is inputted correctly, the user arrives at the next screen. Here they are told the log was successfully updated, which is emphasised by the use of green text, they are shown the running report, so they have a reminder of what has already been inputted, and finally they are asked whether or not they would like to update another area. If they answer "y", they are taken back to the introduction screen, and the process starts again. If they answer "n" they are moved on to the exit screen. Much like the instances where the user is asked to input either "y" or "n", if inputted incorrectly the user is warned and asked to try again.
+Once the finds data is inputted correctly, the user arrives at the next screen. Here they are told the log was successfully updated, which is emphasised by the use of green text, they are shown the running report in yellow, so they have a reminder of what has already been inputted, and finally they are asked whether or not they would like to update another area. If they answer "y", they are taken back to the introduction screen, and the process starts again. If they answer "n" they are moved on to the exit screen. Much like the instances where the user is asked to input either "y" or "n", if inputted incorrectly the user is warned and asked to try again.
 
 - Exit Screen
 
-![Exit Screen](docs/images/end_screen.webp)
+![Exit Screen](docs/images/end_of_session.webp)
 
-Once the user has decided all of the finds data for the day is inputted they are moved on to the exit screen. Here they area thanked for using the service, and are shown the total finds from the session and the total finds to date.
+Once the user has decided all of the finds data for the day is inputted they are moved on to the exit screen. Here they area thanked for using the service, and are shown the total finds from the session and the total finds to date in yellow for emphasis.
 
 ### Invalid Data Handling
 
