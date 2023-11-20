@@ -81,6 +81,13 @@ def choose_existing_area():
         UPDATE_HISTORY.append(chosen_area)
         os.system('cls' if os.name == 'nt' else 'clear')
         print_header(f"{chosen_area}")
+
+    elif chosen_area == "":
+        print(
+            f"\n{Fore.RED}Please enter an area name {Style.RESET_ALL}"
+        )
+        choose_existing_area()
+
     else:
         print(
             f"\n{Fore.RED}{chosen_area} doesn't exist."
@@ -121,7 +128,13 @@ def create_excavation_area():
 
     new_area_name = input("\nName of new excavation area: \n")
 
-    if new_area_name not in area_titles:
+    if new_area_name == "":
+        print(
+            f"\n{Fore.RED}Please enter an area name {Style.RESET_ALL}"
+        )
+        create_excavation_area()
+
+    elif new_area_name not in area_titles:
         print(f"\nCreating {new_area_name}...\n")
 
         new_area = SHEET.add_worksheet(
@@ -138,6 +151,7 @@ def create_excavation_area():
         UPDATE_HISTORY.append(new_area_name)
         os.system('cls' if os.name == 'nt' else 'clear')
         print_header(f"{new_area_name}")
+
     else:
         print(
             f"\n{Fore.RED}{new_area_name}"

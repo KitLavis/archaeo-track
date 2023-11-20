@@ -154,4 +154,4 @@ The application was deployed on Heroku, using the Code Institute mock terminal. 
 | -------| ----- |
 | Code institute | Four functions from the Love Sandwiches walkthrough project: get_finds_date, validate_data, update_worksheet and calculate_all_time_totals  |
 | Code Institute | Mock terminal template for deployment |
-| [Stack Overflow](https://stackoverflow.com/questions/28883769/remove-odd-indexed-elements-from-list-in-python) | Code for the list comprehension on lines 41, 74, 118, 220 and 235 |
+| [Stack Overflow](https://stackoverflow.com/questions/28883769/remove-odd-indexed-elements-from-list-in-python) | Code for the list comprehension on lines 41, 74, 125, 234 and 249 |
