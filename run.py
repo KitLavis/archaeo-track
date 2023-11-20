@@ -42,6 +42,8 @@ def check_log():
         ]
     area_titles.sort()
     print("\nCurrent excavation areas:\n")
+    print(f"{Fore.YELLOW}Totals{Style.RESET_ALL} are updated automatically.")
+    print(f"{Fore.RED}Do not{Style.RESET_ALL} update manually.\n")
 
     for area_title in area_titles:
         print(area_title)

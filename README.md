@@ -102,6 +102,7 @@ Due to time constraints, there are a number of features yet to be implemented. F
 - The user will also be able to delete logs/sheets from the terminal.
 - If the user attempts to update an area for which a log for the day already exists, they will be shown the day's log and asked if they still want to update it. This is to prevent data being inputted twice.
 - To do all of the above, the user must also have the ability to view all existing data from within the terminal, so that is also a feature to be implemented in the future.
+- The all time totals and daily total sheets can currently be manually updated in the program. The user is warned not to do this, however it is still possible. In future, this ability will be removed.
 
 #### Ease of Future Development
 
@@ -160,4 +161,4 @@ The application was deployed on Heroku, using the Code Institute mock terminal. 
 | -------| ----- |
 | Code institute | Four functions from the Love Sandwiches walkthrough project: get_finds_date, validate_data, update_worksheet and calculate_all_time_totals  |
 | Code Institute | Mock terminal template for deployment |
-| [Stack Overflow](https://stackoverflow.com/questions/28883769/remove-odd-indexed-elements-from-list-in-python) | Code for the list comprehension on lines 41, 74, 125, 234 and 249 |
+| [Stack Overflow](https://stackoverflow.com/questions/28883769/remove-odd-indexed-elements-from-list-in-python) | Code for the list comprehension on lines 41, 76, 127, 236 and 251 |
