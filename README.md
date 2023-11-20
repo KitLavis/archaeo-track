@@ -71,6 +71,12 @@ If the user has decided to create a log for a new area, but they enter the name 
 
 If the user has decided to update an area for which a log already exists, but they enter an incorrect area name, this warning is given. They are then asked whether or not they would like to create a new area.
 
+- Empty Input
+
+![Nothing inputted error](docs/images/empty_input_error.webp)
+
+If the user leaves the input field empty when creating or selecting an excavation area, this warning is given and they are asked to input again.
+
 - Data can't be converted to integer
 
 ![ValueError: data can't be converted](docs/images/invalid_data_int.webp)
